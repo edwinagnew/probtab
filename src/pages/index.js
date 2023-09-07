@@ -1,6 +1,8 @@
 import * as React from "react"
 import Graph from "react-graph-vis";
 
+import comp_json from '../../knowledge/comp_classes.json';
+
 const pageStyles = {
   color: "#232129",
   padding: 96,
@@ -18,103 +20,69 @@ const headingAccentStyles = {
 const paragraphStyles = {
   marginBottom: 48,
 }
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
-const listStyles = {
-  marginBottom: 96,
-  paddingLeft: 0,
-}
-const listItemStyles = {
-  fontWeight: 300,
-  fontSize: 24,
-  maxWidth: 560,
-  marginBottom: 30,
-}
-
-const linkStyle = {
-  color: "#8954A8",
-  fontWeight: "bold",
-  fontSize: 16,
-  verticalAlign: "5%",
-}
-
-const docLinkStyle = {
-  ...linkStyle,
-  listStyleType: "none",
-  marginBottom: 24,
-}
-
-const descriptionStyle = {
-  color: "#232129",
-  fontSize: 14,
-  marginTop: 10,
-  marginBottom: 0,
-  lineHeight: 1.25,
-}
-
-const docLink = {
-  text: "Documentation",
-  url: "https://www.gatsbyjs.com/docs/",
-  color: "#8954A8",
-}
-
-const badgeStyle = {
-  color: "#fff",
-  backgroundColor: "#088413",
-  border: "1px solid #088413",
-  fontSize: 11,
-  fontWeight: "bold",
-  letterSpacing: 1,
-  borderRadius: 4,
-  padding: "4px 6px",
-  display: "inline-block",
-  position: "relative",
-  top: -2,
-  marginLeft: 10,
-  lineHeight: 1,
-}
-
-const links = []
 
 const IndexPage = () => {
+  // TODO: make so its constantly updated by checklist of what you want to see...
+
+  const curr_display = ["P", "NP", "BQP", "PSPACE"] // by defualt (will add way more)
+
+  const comp_dict = build_dict_from_json();
+  
+  var display_nodes = [];
+  for (const name in comp_dict){
+    if (curr_display.includes(name)){
+      display_nodes.push( {id: comp_dict[name].id, label:name})
+    }
+  }
+
+  const inc_edges = comp_json["relations"]["inclusions"];
+  var display_edges = [];
+  for (var i = 0; i < inc_edges.length; i++ ){
+    const edge = inc_edges[i];
+    if (curr_display.includes(edge.from) && curr_display.includes(edge.to)){
+      display_edges.push( {from: comp_dict[edge.from].id, to: comp_dict[edge.to].id}) //TODO: store edge.details somewhere else
+    }
+  }
+
   const graph = {
-    nodes: [
-      { id: 1, label: "P", title: "node 1 tootip text" },
-      { id: 2, label: "NP", title: "node 2 tootip text" },
-      { id: 3, label: "BQP", title: "node 3 tootip text" },
-      { id: 4, label: "PSPACE", title: "node 4 tootip text" },
-    ],
-    edges: [
-      { from: 1, to: 2 },
-      { from: 1, to: 3 },
-      { from: 2, to: 4 },
-      { from: 3, to: 4 },
-    ]
+    nodes: display_nodes,
+    edges: display_edges,
   };
 
   const options = {
+    width: "60%",
+    height: "400px",
+
+    nodes: {
+      font: {
+        face: 'courier new',
+      },
+
+    },
+
+    edges: {
+      color: "#000000"
+    },
+
+    interaction: {
+      hover: true,
+      hoverConnectedEdges: false,
+      navigationButtons: false, // doesn't seem to be working when true, but would be cool
+      selectConnectedEdges: false,
+      zoomSpeed: 0.7,
+    },
+
     layout: {
       hierarchical: {
         direction: 'DU',        // UD, DU, LR, RL
         sortMethod: 'directed',  // hubsize, directed
       }
     },
-    edges: {
-      color: "#000000"
-    },
-    height: "750px"
   };
  
   const events = {
-    select: function(event) {
-      var { nodes, edges } = event;
-    }
   };
+
   return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>
@@ -136,6 +104,20 @@ const IndexPage = () => {
       />
     </main>
   )
+}
+
+function build_dict_from_json() {
+  console.log(comp_json);
+
+  var comp_dict = {};
+
+  for (var i = 0; i < comp_json['classes'].length; i++){
+    var entry = comp_json['classes'][i];
+    comp_dict[entry.name] = {id: entry.id, details: entry.details};
+  }
+
+  return comp_dict;
+
 }
 
 export default IndexPage

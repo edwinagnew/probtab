@@ -1,0 +1,31 @@
+{
+    "classes": 
+    [
+        {"id": 1, "name": "P", "details":"poly time etc"},
+        {"id": 2, "name": "NP", "details":"nondet poly time etc"},
+        {"id": 3, "name": "BQP", "details":"quantum poly time etc"},
+        {"id": 4, "name": "PSPACE", "details":"poly space etc"},
+        {"id": 5, "name": "PH", "details":"hierarchy blah"},
+        {"id": 6, "name": "EXP", "details":"exp time etc"}
+    ],
+
+    "relations":
+    {
+        "inclusions":
+        [
+            {"from": "P", "to": "NP", "info": {}},
+            {"from": "P", "to":"BQP", "info":{}},
+            {"from": "NP", "to": "PSPACE", "info": {}},
+            {"from": "BQP", "to": "PSPACE", "info": {}},
+            {"from": "PSPACE", "to": "EXP", "info": {}}
+        ],
+        "exclusions":
+        [
+            {"from": "P", "to": "EXP", "info": {"proof": "DTime hierarchy"}}
+        ],
+        "collapses":
+        [
+            {"if": ["NP", "P"], "then": ["PH", "P"], "info":{"name": "polynomial hierarchy collapse"}}
+        ]
+    }
+}
