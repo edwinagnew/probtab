@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState, useEffect } from "react";
 import Graph from "react-graph-vis";
 
 import comp_json from '../../knowledge/comp_classes.json';
@@ -22,36 +22,77 @@ const paragraphStyles = {
 }
 
 const IndexPage = () => {
-  // TODO: make so its constantly updated by checklist of what you want to see...
-
-  const curr_display = ["P", "NP", "BQP", "PSPACE"] // by defualt (will add way more)
 
   const comp_dict = build_dict_from_json();
+
+  const connectivities = build_connectivities(Object.keys(comp_dict));
+
+
+  const [selectedNodes, setSelectedNodes] = useState(["P", "NP", "BQP", "PSPACE"]);
+
+
+  const [graph, setGraph] = useState({nodes: [], edges: []});
+
+
+
+
+  useEffect(() => { //should only get called once cos of empty dependencies...
+    const nodeSelect = document.getElementById('nodeSelect');
+    console.log(nodeSelect.childElementCount);
+    if (nodeSelect.childElementCount === 0){
+      for (const node_name in comp_dict) {
+        const option = document.createElement('option');
+        option.value = node_name;
+        option.textContent = node_name;
+        option.selected = selectedNodes.includes(node_name);
+        nodeSelect.appendChild(option);
+      }
+      updateGraphDisplay(); //cheaky fix but whatever
+    }
+    
+  }, []);
   
-  var display_nodes = [];
-  for (const name in comp_dict){
-    if (curr_display.includes(name)){
-      display_nodes.push( {id: comp_dict[name].id, label:name})
-    }
-  }
 
-  const inc_edges = comp_json["relations"]["inclusions"];
-  var display_edges = [];
-  for (var i = 0; i < inc_edges.length; i++ ){
-    const edge = inc_edges[i];
-    if (curr_display.includes(edge.from) && curr_display.includes(edge.to)){
-      display_edges.push( {from: comp_dict[edge.from].id, to: comp_dict[edge.to].id}) //TODO: store edge.details somewhere else
-    }
-  }
+  const updateGraphDisplay = () => {
+    const nodeSelect = document.getElementById('nodeSelect');
+    const selectedOptions = Array.from(nodeSelect.selectedOptions).map(option => option.value);
+    setSelectedNodes(selectedOptions);
 
-  const graph = {
-    nodes: display_nodes,
-    edges: display_edges,
+    const display_nodes = [];
+    for (const name in comp_dict) {
+      if (selectedOptions.includes(name)) {
+        display_nodes.push({ id: comp_dict[name].id, label: name });
+      }
+    }
+
+    //const inc_edges = comp_json["relations"]["inclusions"];
+    //const diplay_edges = get_edges(display_nodes);
+    //const display_edges = inc_edges
+    //  .filter(edge => selectedOptions.includes(edge.from) && selectedOptions.includes(edge.to))
+    //  .map(edge => ({ from: comp_dict[edge.from].id, to: comp_dict[edge.to].id }));
+    const display_edges = [];
+    for (const n1 of display_nodes){
+      for (const n2 of display_nodes){
+          if(n1.label !== n2.label && is_connected(connectivities, n1.label, n2.label)){
+            display_edges.push( {from:comp_dict[n1.label].id, to:comp_dict[n2.label].id}); //slightly buggy: gives triangles (eg, P, NP, PSPACE)
+          }
+      }
+    }
+
+    //console.log(display_nodes);
+    //console.log(display_edges);
+
+    setGraph({
+      nodes: display_nodes,
+      edges: display_edges,
+    });
+
   };
+
 
   const options = {
     width: "60%",
-    height: "400px",
+    height: "500px",
 
     nodes: {
       font: {
@@ -102,13 +143,14 @@ const IndexPage = () => {
           //  if you want access to vis.js network api you can set the state in a parent component using this property
         }}
       />
+
+    <select id="nodeSelect" onChange={updateGraphDisplay} multiple>
+    </select>
     </main>
   )
 }
 
 function build_dict_from_json() {
-  console.log(comp_json);
-
   var comp_dict = {};
 
   for (var i = 0; i < comp_json['classes'].length; i++){
@@ -117,6 +159,37 @@ function build_dict_from_json() {
   }
 
   return comp_dict;
+}
+
+function build_connectivities(classes) {
+  const edges = comp_json["relations"]["inclusions"];
+
+  const cons = {};
+  for (const e of edges){
+    if (cons[e.from] == undefined){
+      cons[e.from] = [];
+    }
+    cons[e.from].push(e.to);
+  }
+
+  return cons;
+}
+
+function is_connected(cons, n1, n2) {
+  if ( !(n1 in cons) || cons[n1] === []){
+    return false;
+  }
+  if (n1 === n2 || cons[n1].includes(n2)){
+    return true;
+  }
+
+  for (const n_mid of cons[n1]){
+    if (is_connected(cons, n_mid, n2)){
+      return true;
+    }
+  }
+
+  return false;
 
 }
 
