@@ -65,22 +65,18 @@ const IndexPage = () => {
       }
     }
 
-    //const inc_edges = comp_json["relations"]["inclusions"];
-    //const diplay_edges = get_edges(display_nodes);
-    //const display_edges = inc_edges
-    //  .filter(edge => selectedOptions.includes(edge.from) && selectedOptions.includes(edge.to))
-    //  .map(edge => ({ from: comp_dict[edge.from].id, to: comp_dict[edge.to].id }));
+   
     const display_edges = [];
     for (const n1 of display_nodes){
       for (const n2 of display_nodes){
-          if(n1.label !== n2.label && is_connected(connectivities, n1.label, n2.label)){
-            display_edges.push( {from:comp_dict[n1.label].id, to:comp_dict[n2.label].id}); //slightly buggy: gives triangles (eg, P, NP, PSPACE)
+          if(n1 !== n2 && is_connected(connectivities, selectedOptions, n1.label, n2.label)){
+            display_edges.push( {from:comp_dict[n1.label].id, to:comp_dict[n2.label].id});
           }
       }
     }
 
-    //console.log(display_nodes);
-    //console.log(display_edges);
+    console.log(display_nodes);
+    console.log(display_edges);
 
     setGraph({
       nodes: display_nodes,
@@ -166,7 +162,7 @@ function build_connectivities(classes) {
 
   const cons = {};
   for (const e of edges){
-    if (cons[e.from] == undefined){
+    if (cons[e.from] === undefined){
       cons[e.from] = [];
     }
     cons[e.from].push(e.to);
@@ -175,7 +171,7 @@ function build_connectivities(classes) {
   return cons;
 }
 
-function is_connected(cons, n1, n2) {
+function is_connected(cons, currents, n1, n2) {
   if ( !(n1 in cons) || cons[n1] === []){
     return false;
   }
@@ -183,8 +179,11 @@ function is_connected(cons, n1, n2) {
     return true;
   }
 
+  if (cons[n1].some( (n_mid) => currents.includes(n_mid))){ // if next level contains a connection, don't need to worry about any furthers 
+    return false;
+  }
   for (const n_mid of cons[n1]){
-    if (is_connected(cons, n_mid, n2)){
+    if (!(currents.includes(n_mid)) && is_connected(cons, currents, n_mid, n2)){ // n_mid shouldnt be displayed, otherwise gets double arrow
       return true;
     }
   }

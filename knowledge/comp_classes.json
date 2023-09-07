@@ -15,7 +15,6 @@
         [
             {"from": "P", "to": "NP", "info": {}},
             {"from": "P", "to":"BQP", "info":{}},
-            {"from": "NP", "to": "PSPACE", "info": {}},
             {"from": "BQP", "to": "PSPACE", "info": {}},
             {"from": "PSPACE", "to": "EXP", "info": {}},
             {"from": "NP", "to": "PH", "info": {}},
