@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Graph from "react-graph-vis";
+import Graph from 'react-graph-vis';
+import SlidingPanel from 'react-sliding-side-panel';
+import '../styles/panel_styles.css';
 
 import comp_json from '../../knowledge/comp_classes.json';
 
@@ -23,45 +25,48 @@ const paragraphStyles = {
 
 const IndexPage = () => {
 
+  const ref = React.useRef();
+
+  //comp_dict is a dictionary with comp classes and keys and other info as values
   const comp_dict = build_dict_from_json();
 
+  // connectivities is a list of outgoing arrows for every class
   const connectivities = build_connectivities(Object.keys(comp_dict));
 
 
-  const [selectedNodes, setSelectedNodes] = useState(["P", "NP", "BQP", "PSPACE"]);
-
-
+  const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BQP", "PSPACE"]); //these are the default selected nodes for now
+  const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
+  const [openPanel, setOpenPanel] = useState(false);
   const [graph, setGraph] = useState({nodes: [], edges: []});
 
 
 
-
+  //builds the select box based off classes in comp_dict
   useEffect(() => { //should only get called once cos of empty dependencies...
     const nodeSelect = document.getElementById('nodeSelect');
-    console.log(nodeSelect.childElementCount);
     if (nodeSelect.childElementCount === 0){
       for (const node_name in comp_dict) {
         const option = document.createElement('option');
         option.value = node_name;
         option.textContent = node_name;
-        option.selected = selectedNodes.includes(node_name);
+        option.selected = tickedNodes.includes(node_name);
         nodeSelect.appendChild(option);
       }
       updateGraphDisplay(); //cheaky fix but whatever
     }
-    
   }, []);
   
 
+  //gets selections from select box and draws the nodes and relevant edges
   const updateGraphDisplay = () => {
     const nodeSelect = document.getElementById('nodeSelect');
     const selectedOptions = Array.from(nodeSelect.selectedOptions).map(option => option.value);
-    setSelectedNodes(selectedOptions);
+    setTickedNodes(selectedOptions);
 
     const display_nodes = [];
     for (const name in comp_dict) {
       if (selectedOptions.includes(name)) {
-        display_nodes.push({ id: comp_dict[name].id, label: name });
+        display_nodes.push({ id: name, label: '*' + name + '*' }); // makes text bold
       }
     }
 
@@ -69,14 +74,15 @@ const IndexPage = () => {
     const display_edges = [];
     for (const n1 of display_nodes){
       for (const n2 of display_nodes){
-          if(n1 !== n2 && is_connected(connectivities, selectedOptions, n1.label, n2.label)){
-            display_edges.push( {from:comp_dict[n1.label].id, to:comp_dict[n2.label].id});
+          if(n1 !== n2 && is_connected(connectivities, selectedOptions, n1.id, n2.id)){
+            //display_edges.push( {from:comp_dict[n1].id, to:comp_dict[n2].id});
+            display_edges.push( {from:n1.id, to:n2.id});
           }
       }
     }
 
-    console.log(display_nodes);
-    console.log(display_edges);
+    //console.log(display_nodes);
+    //console.log(display_edges);
 
     setGraph({
       nodes: display_nodes,
@@ -87,14 +93,15 @@ const IndexPage = () => {
 
 
   const options = {
-    width: "60%",
+    width: "50%",
     height: "500px",
 
     nodes: {
       font: {
         face: 'courier new',
+        size: 16,
+        multi: 'md',
       },
-
     },
 
     edges: {
@@ -104,8 +111,8 @@ const IndexPage = () => {
     interaction: {
       hover: true,
       hoverConnectedEdges: false,
-      navigationButtons: false, // doesn't seem to be working when true, but would be cool
       selectConnectedEdges: false,
+      navigationButtons: false, // doesn't seem to be working when true, but would be cool
       zoomSpeed: 0.7,
     },
 
@@ -118,6 +125,19 @@ const IndexPage = () => {
   };
  
   const events = {
+    selectNode: ({ nodes }) => {
+      const node = nodes[0];
+      console.log("selected " + node);
+      ref.current.focus(node, {animation:{duration:450}});
+
+      setSelectedNode(node);
+      setOpenPanel(true);
+    },
+    deselectNode: ({previousSelection}) => {
+      const node = previousSelection.nodes[0].id;
+      console.log("unselected " + node);
+      setOpenPanel(false);
+    }
   };
 
   return (
@@ -131,17 +151,29 @@ const IndexPage = () => {
         This is the basic map of what's known so far:
       </p>
 
-      <Graph
+      <select id="nodeSelect" onChange={updateGraphDisplay} multiple></select>
+      <div className='graph-border'>
+        <Graph
         graph={graph}
         options={options}
         events={events}
         getNetwork={network => {
-          //  if you want access to vis.js network api you can set the state in a parent component using this property
+          ref.current = network;
         }}
-      />
+        />
+      </div>
+      <SlidingPanel
+        type="right"
+        isOpen={openPanel}
+      >
+        <div className="panel-container">
+          <div>Name: {selectedNode}</div>
+          {comp_dict[selectedNode] && (
+          <div>Details: {comp_dict[selectedNode].details}</div>
+          )}
 
-    <select id="nodeSelect" onChange={updateGraphDisplay} multiple>
-    </select>
+        </div>
+      </SlidingPanel>
     </main>
   )
 }
@@ -171,17 +203,22 @@ function build_connectivities(classes) {
   return cons;
 }
 
+//checks whether n1 is (recursively) connected to n2. To prevent double arrow, currents is list of nodes that will be drawn
 function is_connected(cons, currents, n1, n2) {
+  //basic falsity check for n1 having no connections
   if ( !(n1 in cons) || cons[n1] === []){
     return false;
   }
+  //basic truth check that n1 is n2 or n1 is immediately connected to n2
   if (n1 === n2 || cons[n1].includes(n2)){
     return true;
   }
 
-  if (cons[n1].some( (n_mid) => currents.includes(n_mid))){ // if next level contains a connection, don't need to worry about any furthers 
+  //to avoid double arrow, checks whether there is some n_mid that will also be drawn and is (truly) connected to n2
+  if (cons[n1].some( (n_mid) => currents.includes(n_mid) && is_connected(cons, [], n_mid, n2))){ 
     return false;
   }
+  //checks whether theres an n_mid (not in currents) such that n1->n_mid-*>n2
   for (const n_mid of cons[n1]){
     if (!(currents.includes(n_mid)) && is_connected(cons, currents, n_mid, n2)){ // n_mid shouldnt be displayed, otherwise gets double arrow
       return true;

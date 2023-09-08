@@ -24,7 +24,8 @@
     "gatsby-source-filesystem": "^5.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.66.1",
-    "react-graph-vis": "^1.0.7"
+    "react-graph-vis": "^1.0.7",
+    "react-sliding-side-panel": "^2.0.3",
+    "sass": "^1.66.1"
   }
 }

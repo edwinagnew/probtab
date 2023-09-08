@@ -1,12 +1,12 @@
 {
     "classes": 
     [
-        {"id": 0, "name": "P", "details":"poly time etc"},
-        {"id": 1, "name": "NP", "details":"nondet poly time etc"},
-        {"id": 2, "name": "BQP", "details":"quantum poly time etc"},
-        {"id": 3, "name": "PSPACE", "details":"poly space etc"},
-        {"id": 4, "name": "PH", "details":"hierarchy blah"},
-        {"id": 5, "name": "EXP", "details":"exp time etc"}
+        {"name": "P", "details":"poly time etc"},
+        {"name": "NP", "details":"nondet poly time etc"},
+        {"name": "BQP", "details":"quantum poly time etc"},
+        {"name": "PSPACE", "details":"poly space etc"},
+        {"name": "PH", "details":"hierarchy blah"},
+        {"name": "EXP", "details":"exp time etc"}
     ],
 
     "relations":
