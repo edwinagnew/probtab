@@ -31,7 +31,7 @@ const IndexPage = () => {
   const comp_dict = build_dict_from_json();
 
   // connectivities is a list of outgoing arrows for every class
-  const connectivities = build_connectivities(Object.keys(comp_dict));
+  const connectivities = build_connectivities();
 
 
   const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BQP", "PSPACE"]); //these are the default selected nodes for now
@@ -128,7 +128,7 @@ const IndexPage = () => {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
       console.log("selected " + node);
-      ref.current.focus(node, {animation:{duration:450}});
+      ref.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
 
       setSelectedNode(node);
       setOpenPanel(true);
@@ -189,7 +189,7 @@ function build_dict_from_json() {
   return comp_dict;
 }
 
-function build_connectivities(classes) {
+function build_connectivities() {
   const edges = comp_json["relations"]["inclusions"];
 
   const cons = {};
