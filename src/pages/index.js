@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Graph from 'react-graph-vis';
 import SlidingPanel from 'react-sliding-side-panel';
+import 'react-sliding-side-panel/lib/index.css';
+
 import '../styles/panel_styles.css';
 
 import comp_json from '../../knowledge/comp_classes.json';
@@ -93,7 +95,7 @@ const IndexPage = () => {
 
 
   const options = {
-    width: "50%",
+    width: "100%",
     height: "500px",
 
     nodes: {
@@ -152,6 +154,7 @@ const IndexPage = () => {
       </p>
 
       <select id="nodeSelect" onChange={updateGraphDisplay} multiple></select>
+      <br></br>
       <div className='graph-border'>
         <Graph
         graph={graph}
@@ -165,16 +168,19 @@ const IndexPage = () => {
       <SlidingPanel
         type="right"
         isOpen={openPanel}
+        noBackdrop={true}
       >
         <div className="panel-container">
           <div>Name: {selectedNode}</div>
           {comp_dict[selectedNode] && (
           <div>Details: {comp_dict[selectedNode].details}</div>
           )}
-
         </div>
       </SlidingPanel>
+
+      
     </main>
+    
   )
 }
 
