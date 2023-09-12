@@ -4,6 +4,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -83,7 +84,7 @@ const IndexPage = () => {
 
   const options = {
     width: "100%",
-    height: "500px",
+    height: "650px",
 
     nodes: {
       font: {
@@ -143,6 +144,10 @@ const IndexPage = () => {
     }
   };
 
+  function recentreGraph() {
+    ref.current.fit({animation:{duration:450, easingFunction:"easeInOutQuad"}});
+  }
+
 
 
   return (
@@ -157,21 +162,26 @@ const IndexPage = () => {
       </p>
 
       <div className='checkbox-selector'>
-      <Form>
-      {Object.keys(comp_dict).map((cls) => (
-        <div className="mb-0" key={`checkbox-${cls}`}>
-          <Form.Check // prettier-ignore
-            label={cls}
-            id={cls}
-            defaultChecked={tickedNodes.includes(cls)}
-            onChange={(e) => handleNodeCheckboxChange(cls, e.target.checked)}
-          />
-        </div>
-      ))}
-      </Form>
+        <Form>
+        {Object.keys(comp_dict).map((cls) => (
+          <div className="mb-0" key={`checkbox-${cls}`}>
+            <Form.Check // prettier-ignore
+              label={cls}
+              id={cls}
+              defaultChecked={tickedNodes.includes(cls)}
+              onChange={(e) => handleNodeCheckboxChange(cls, e.target.checked)}
+            />
+          </div>
+        ))}
+        </Form>
       </div>
+
       <br></br>
+
       <div className='graph-border'>
+        <div style={{padding:5}}>
+          <Button variant="secondary" onClick={recentreGraph}>Recentre</Button>{' '}
+        </div>
         <Graph
         graph={graph}
         options={options}
@@ -181,6 +191,7 @@ const IndexPage = () => {
         }}
         />
       </div>
+
       <SlidingPanel
         type="right"
         size={30}
@@ -189,7 +200,7 @@ const IndexPage = () => {
       >
         {comp_dict[selectedNode] && (<div className="panel-container">
           <div>Name: {selectedNode}</div>
-          <div>Details: {comp_dict[selectedNode].details}</div>
+          <div>{comp_dict[selectedNode].shortDescription}</div>
         </div>
         )}
       </SlidingPanel>
@@ -205,7 +216,7 @@ function build_dict_from_json() {
 
   for (var i = 0; i < comp_json['classes'].length; i++){
     var entry = comp_json['classes'][i];
-    comp_dict[entry.name] = {id: entry.id, details: entry.details};
+    comp_dict[entry.name] = {id: entry.id, shortDescription: entry.shortDescription};
   }
 
   return comp_dict;

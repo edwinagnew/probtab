@@ -1,12 +1,12 @@
 {
     "classes": 
     [
-        {"name": "P", "details":"poly time etc"},
-        {"name": "NP", "details":"nondet poly time etc"},
-        {"name": "BQP", "details":"quantum poly time etc"},
-        {"name": "PSPACE", "details":"poly space etc"},
-        {"name": "PH", "details":"hierarchy blah"},
-        {"name": "EXP", "details":"exp time etc"}
+        {"name": "P", "shortDescription":"Polynomial time"},
+        {"name": "NP", "shortDescription":"Non-deterministic polynomial time"},
+        {"name": "BQP", "shortDescription":"Bounded-error quantum polynomial time"},
+        {"name": "PSPACE", "shortDescription":"Polynomial space"},
+        {"name": "PH", "shortDescription":"Polynomial hierarchy"},
+        {"name": "EXP", "shortDescription":"Exponential time"}
     ],
 
     "relations":
