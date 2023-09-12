@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Graph from 'react-graph-vis';
-import SlidingPanel from 'react-sliding-side-panel';
-import 'react-sliding-side-panel/lib/index.css';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
 import '../styles/panel_styles.css';
 
-import comp_json from '../../knowledge/comp_classes.json';
+import {build_dict_from_json, build_connectivities, makeTitle, is_connected} from "../utils"
+
+
+import { CheckFormComp } from "../components/checkForm";
+import { SidePaneComp } from "../components/sidePane";
+import { GraphComp } from "../components/graph";
 
 const pageStyles = {
   color: "#232129",
@@ -33,7 +30,7 @@ const paragraphStyles = {
 
 const IndexPage = () => {
 
-  const ref = React.useRef();
+  const graphRef = React.useRef();
 
   //comp_dict is a dictionary with comp classes and keys and other info as values
   const comp_dict = build_dict_from_json();
@@ -56,7 +53,7 @@ const IndexPage = () => {
     const display_nodes = [];
     for (const name in comp_dict) {
       if (tickedNodes.includes(name)) {
-        display_nodes.push({ id: name, label: '*' + name + '*' }); // makes text bold
+        display_nodes.push({ id: name, label: '*' + name + '*', title:makeTitle(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
       }
     }
 
@@ -80,45 +77,12 @@ const IndexPage = () => {
     });
 
   };
-
-
-  const options = {
-    width: "100%",
-    height: "650px",
-
-    nodes: {
-      font: {
-        face: 'courier new',
-        size: 16,
-        multi: 'md',
-      },
-    },
-
-    edges: {
-      color: "#000000"
-    },
-
-    interaction: {
-      hover: true,
-      hoverConnectedEdges: false,
-      selectConnectedEdges: false,
-      navigationButtons: false, // doesn't seem to be working when true, but would be cool
-      zoomSpeed: 0.7,
-    },
-
-    layout: {
-      hierarchical: {
-        direction: 'DU',        // UD, DU, LR, RL
-        sortMethod: 'directed',  // hubsize, directed
-      }
-    },
-  };
  
   const events = {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
       console.log("selected " + node);
-      ref.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
+      graphRef.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
 
       setSelectedNode(node);
       setOpenPanel(true);
@@ -126,6 +90,7 @@ const IndexPage = () => {
     deselectNode: ({previousSelection}) => {
       const node = previousSelection.nodes[0].id;
       console.log("unselected " + node);
+      setSelectedNode("");
       setOpenPanel(false);
     }
   };
@@ -144,10 +109,6 @@ const IndexPage = () => {
     }
   };
 
-  function recentreGraph() {
-    ref.current.fit({animation:{duration:450, easingFunction:"easeInOutQuad"}});
-  }
-
 
 
   return (
@@ -161,106 +122,19 @@ const IndexPage = () => {
         This is the basic map of what's known so far:
       </p>
 
-      <div className='checkbox-selector'>
-        <Form>
-        {Object.keys(comp_dict).map((cls) => (
-          <div className="mb-0" key={`checkbox-${cls}`}>
-            <Form.Check // prettier-ignore
-              label={cls}
-              id={cls}
-              defaultChecked={tickedNodes.includes(cls)}
-              onChange={(e) => handleNodeCheckboxChange(cls, e.target.checked)}
-            />
-          </div>
-        ))}
-        </Form>
-      </div>
+     <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
 
       <br></br>
 
-      <div className='graph-border'>
-        <div style={{padding:5}}>
-          <Button variant="secondary" onClick={recentreGraph}>Recentre</Button>{' '}
-        </div>
-        <Graph
-        graph={graph}
-        options={options}
-        events={events}
-        getNetwork={network => {
-          ref.current = network;
-        }}
-        />
-      </div>
+      <GraphComp graphRef={graphRef} graph={graph} events={events}/>
 
-      <SlidingPanel
-        type="right"
-        size={30}
-        isOpen={openPanel}
-        noBackdrop={true}
-      >
-        {comp_dict[selectedNode] && (<div className="panel-container">
-          <div>Name: {selectedNode}</div>
-          <div>{comp_dict[selectedNode].shortDescription}</div>
-        </div>
-        )}
-      </SlidingPanel>
-
+      <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode}/>
       
     </main>
     
   )
 }
 
-function build_dict_from_json() {
-  var comp_dict = {};
-
-  for (var i = 0; i < comp_json['classes'].length; i++){
-    var entry = comp_json['classes'][i];
-    comp_dict[entry.name] = {id: entry.id, shortDescription: entry.shortDescription};
-  }
-
-  return comp_dict;
-}
-
-function build_connectivities() {
-  const edges = comp_json["relations"]["inclusions"];
-
-  const cons = {};
-  for (const e of edges){
-    if (cons[e.from] === undefined){
-      cons[e.from] = [];
-    }
-    cons[e.from].push(e.to);
-  }
-
-  return cons;
-}
-
-//checks whether n1 is (recursively) connected to n2. To prevent double arrow, currents is list of nodes that will be drawn
-function is_connected(cons, currents, n1, n2) {
-  //basic falsity check for n1 having no connections
-  if ( !(n1 in cons) || cons[n1] === []){
-    return false;
-  }
-  //basic truth check that n1 is n2 or n1 is immediately connected to n2
-  if (n1 === n2 || cons[n1].includes(n2)){
-    return true;
-  }
-
-  //to avoid double arrow, checks whether there is some n_mid that will also be drawn and is (truly) connected to n2
-  if (cons[n1].some( (n_mid) => currents.includes(n_mid) && is_connected(cons, [], n_mid, n2))){ 
-    return false;
-  }
-  //checks whether theres an n_mid (not in currents) such that n1->n_mid-*>n2
-  for (const n_mid of cons[n1]){
-    if (!(currents.includes(n_mid)) && is_connected(cons, currents, n_mid, n2)){ // n_mid shouldnt be displayed, otherwise gets double arrow
-      return true;
-    }
-  }
-
-  return false;
-
-}
 
 export default IndexPage
 
