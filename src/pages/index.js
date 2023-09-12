@@ -3,6 +3,11 @@ import Graph from 'react-graph-vis';
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 
+import Form from 'react-bootstrap/Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
 import '../styles/panel_styles.css';
 
 import comp_json from '../../knowledge/comp_classes.json';
@@ -41,33 +46,15 @@ const IndexPage = () => {
   const [openPanel, setOpenPanel] = useState(false);
   const [graph, setGraph] = useState({nodes: [], edges: []});
 
-
-
-  //builds the select box based off classes in comp_dict
-  useEffect(() => { //should only get called once cos of empty dependencies...
-    const nodeSelect = document.getElementById('nodeSelect');
-    if (nodeSelect.childElementCount === 0){
-      for (const node_name in comp_dict) {
-        const option = document.createElement('option');
-        option.value = node_name;
-        option.textContent = node_name;
-        option.selected = tickedNodes.includes(node_name);
-        nodeSelect.appendChild(option);
-      }
-      updateGraphDisplay(); //cheaky fix but whatever
-    }
-  }, []);
   
 
   //gets selections from select box and draws the nodes and relevant edges
   const updateGraphDisplay = () => {
-    const nodeSelect = document.getElementById('nodeSelect');
-    const selectedOptions = Array.from(nodeSelect.selectedOptions).map(option => option.value);
-    setTickedNodes(selectedOptions);
+
 
     const display_nodes = [];
     for (const name in comp_dict) {
-      if (selectedOptions.includes(name)) {
+      if (tickedNodes.includes(name)) {
         display_nodes.push({ id: name, label: '*' + name + '*' }); // makes text bold
       }
     }
@@ -76,7 +63,7 @@ const IndexPage = () => {
     const display_edges = [];
     for (const n1 of display_nodes){
       for (const n2 of display_nodes){
-          if(n1 !== n2 && is_connected(connectivities, selectedOptions, n1.id, n2.id)){
+          if(n1 !== n2 && is_connected(connectivities, tickedNodes, n1.id, n2.id)){
             //display_edges.push( {from:comp_dict[n1].id, to:comp_dict[n2].id});
             display_edges.push( {from:n1.id, to:n2.id});
           }
@@ -142,6 +129,22 @@ const IndexPage = () => {
     }
   };
 
+  useEffect(() => {
+    updateGraphDisplay(); // Update the graph when tickedNodes changes
+  }, [tickedNodes]);
+
+  const handleNodeCheckboxChange = (cls, checked) => {
+    if (checked) {
+      setTickedNodes((prevTickedNodes) => [...prevTickedNodes, cls]);
+    } else {
+      setTickedNodes((prevTickedNodes) =>
+        prevTickedNodes.filter((item) => item !== cls)
+      );
+    }
+  };
+
+
+
   return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>
@@ -153,7 +156,20 @@ const IndexPage = () => {
         This is the basic map of what's known so far:
       </p>
 
-      <select id="nodeSelect" onChange={updateGraphDisplay} multiple></select>
+      <div className='checkbox-selector'>
+      <Form>
+      {Object.keys(comp_dict).map((cls) => (
+        <div className="mb-0" key={`checkbox-${cls}`}>
+          <Form.Check // prettier-ignore
+            label={cls}
+            id={cls}
+            defaultChecked={tickedNodes.includes(cls)}
+            onChange={(e) => handleNodeCheckboxChange(cls, e.target.checked)}
+          />
+        </div>
+      ))}
+      </Form>
+      </div>
       <br></br>
       <div className='graph-border'>
         <Graph
@@ -167,15 +183,15 @@ const IndexPage = () => {
       </div>
       <SlidingPanel
         type="right"
+        size={30}
         isOpen={openPanel}
         noBackdrop={true}
       >
-        <div className="panel-container">
+        {comp_dict[selectedNode] && (<div className="panel-container">
           <div>Name: {selectedNode}</div>
-          {comp_dict[selectedNode] && (
           <div>Details: {comp_dict[selectedNode].details}</div>
-          )}
         </div>
+        )}
       </SlidingPanel>
 
       
