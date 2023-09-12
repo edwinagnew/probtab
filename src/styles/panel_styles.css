@@ -11,7 +11,7 @@
 
 
 .graph-border {
-    border: 2px solid #000;
+    border: 2px solid #00000014;
     display: inline-block;
     width: 70%;
 }
@@ -22,3 +22,4 @@
   overflow-y: scroll;
   background-color:rgba(93, 93, 93, 0.118) ;
 }
+

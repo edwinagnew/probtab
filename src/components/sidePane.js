@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 
 import SlidingPanel from 'react-sliding-side-panel';
-import 'react-sliding-side-panel/lib/index.css';
 
 export class SidePaneComp extends Component {
     render() {

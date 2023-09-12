@@ -1,3 +1,6 @@
+import React from "react";
+
+
 import comp_json from "../knowledge/comp_classes.json"
 
 
@@ -52,12 +55,6 @@ export function build_dict_from_json() {
     return false;
   
   }
-  
-  export function makeTitle(text){
-    const container = document.createElement("pre");
-    container.innerText = TextTrackList;
-    return container;
-  }
 
 
   export function getGraphOptions() {
@@ -83,7 +80,7 @@ export function build_dict_from_json() {
           selectConnectedEdges: false,
           navigationButtons: false, // doesn't seem to be working when true, but would be cool
           zoomSpeed: 0.7,
-          tooltipDelay: 100,
+          tooltipDelay: 200,
         },
     
         layout: {
@@ -97,4 +94,12 @@ export function build_dict_from_json() {
 
   export function recentreGraph(graph) {
     graph.fit({animation:{duration:450, easingFunction:"easeInOutQuad"}});
+  }
+
+
+  export function makeTooltip(text){
+    //https://visjs.github.io/vis-network/examples/network/other/html-in-titles.html
+    const container = document.createElement("pre");
+    container.innerText = text;
+    return container;
   }

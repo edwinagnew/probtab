@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/panel_styles.css';
+import 'react-sliding-side-panel/lib/index.css';
+import 'vis-network/styles/vis-network.css';
 
-import {build_dict_from_json, build_connectivities, makeTitle, is_connected} from "../utils"
+
+
+import {build_dict_from_json, build_connectivities, makeTooltip, is_connected} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
@@ -49,15 +53,16 @@ const IndexPage = () => {
   //gets selections from select box and draws the nodes and relevant edges
   const updateGraphDisplay = () => {
 
-
+    //builds nodes from tickedNodes
     const display_nodes = [];
     for (const name in comp_dict) {
       if (tickedNodes.includes(name)) {
-        display_nodes.push({ id: name, label: '*' + name + '*', title:makeTitle(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
+        display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
+        //display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
       }
     }
 
-   
+   //gets relevant edges
     const display_edges = [];
     for (const n1 of display_nodes){
       for (const n2 of display_nodes){
@@ -68,9 +73,7 @@ const IndexPage = () => {
       }
     }
 
-    //console.log(display_nodes);
-    //console.log(display_edges);
-
+    //sets nodes and edges
     setGraph({
       nodes: display_nodes,
       edges: display_edges,
@@ -99,6 +102,8 @@ const IndexPage = () => {
     updateGraphDisplay(); // Update the graph when tickedNodes changes
   }, [tickedNodes]);
 
+
+  //passed with name and checkedness of checkbox. If in tickedNodes remove, if not in tickedNodes appens
   const handleNodeCheckboxChange = (cls, checked) => {
     if (checked) {
       setTickedNodes((prevTickedNodes) => [...prevTickedNodes, cls]);
@@ -138,4 +143,4 @@ const IndexPage = () => {
 
 export default IndexPage
 
-export const Head = () => <title>Home Page</title>
+export const Head = () => <title>The Problematic Table</title>
