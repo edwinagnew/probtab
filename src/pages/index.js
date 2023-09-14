@@ -83,7 +83,15 @@ const IndexPage = () => {
       const node = nodes[0];
       console.log("selected " + node);
 
-      
+      const tooltips = document.getElementsByClassName("vis-tooltip");
+      if (tooltips.length == 1){
+        const ttip = tooltips.item(0);
+        console.log("hiding" + ttip);
+        ttip.style.visibility = 'hidden';
+      }
+      else{
+        console.warn("mutliple tooltips found, idk what do");
+      }
 
       graphRef.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
 
