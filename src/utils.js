@@ -1,3 +1,7 @@
+import React from "react";
+
+import Tooltip from 'react-bootstrap/Tooltip';
+
 import comp_json from "../knowledge/comp_classes.json"
 
 
@@ -96,7 +100,10 @@ export function build_dict_from_json() {
 
   export function makeTooltip(text){
     //https://visjs.github.io/vis-network/examples/network/other/html-in-titles.html
-    const container = document.createElement("pre");
-    container.innerText = text;
-    return container;
+    //const container = document.createElement("pre");
+    //container.innerText = text;
+    //return container;
+    
+    return text;
   }
+

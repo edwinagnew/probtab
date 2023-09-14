@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/panel_styles.css';
-import 'react-sliding-side-panel/lib/index.css';
 import 'vis-network/styles/vis-network.css';
 
 
@@ -27,9 +27,6 @@ const headingStyles = {
 const headingAccentStyles = {
   color: "#663399",
   fontSize: "1.5rem",
-}
-const paragraphStyles = {
-  marginBottom: 48,
 }
 
 const IndexPage = () => {
@@ -57,8 +54,8 @@ const IndexPage = () => {
     const display_nodes = [];
     for (const name in comp_dict) {
       if (tickedNodes.includes(name)) {
-        //display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
-        display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
+        display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
+        //display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
       }
     }
 
@@ -85,6 +82,9 @@ const IndexPage = () => {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
       console.log("selected " + node);
+
+      
+
       graphRef.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
 
       setSelectedNode(node);
@@ -123,7 +123,7 @@ const IndexPage = () => {
         <br />
         <span style={headingAccentStyles}>— Complexity Theory, made simple.</span>
       </h1>
-      <p style={paragraphStyles}>
+      <p>
         This is the basic map of what's known so far:
       </p>
 

@@ -10,18 +10,7 @@ export class SidePaneComp extends Component {
         const selectedNode = this.props.selectedNode;
         const comp_dict = this.props.comp_dict;
         return (
-            // <SlidingPanel
-            //     type="right"
-            //     size={30}
-            //     isOpen={this.props.openPanel}
-            //     noBackdrop={true}
-            // >
-            //     {comp_dict[selectedNode] && (<div className="panel-container">
-            //     <div>Name: {selectedNode}</div>
-            //     <div>{comp_dict[selectedNode].shortDescription}</div>
-            //     </div>
-            //     )}
-            // </SlidingPanel>
+            // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
             <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} placement='end'>
                 <Offcanvas.Header>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
