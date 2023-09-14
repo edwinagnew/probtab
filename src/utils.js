@@ -1,6 +1,3 @@
-import React from "react";
-
-
 import comp_json from "../knowledge/comp_classes.json"
 
 

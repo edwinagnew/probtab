@@ -23,3 +23,17 @@
   background-color:rgba(93, 93, 93, 0.118) ;
 }
 
+div.vis-tooltip {
+  /* position: absolute;
+  padding: 5px;
+  font-family: verdana;
+  font-size: 14px; */
+  background-color: #db0fa4 !important; 
+  /* border-radius: 3px;
+  border: 1px solid #040404;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); */
+}
+
+.vis-network-tooltip {
+  background-color: #0fdb72 !important; 
+}

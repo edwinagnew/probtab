@@ -57,8 +57,8 @@ const IndexPage = () => {
     const display_nodes = [];
     for (const name in comp_dict) {
       if (tickedNodes.includes(name)) {
-        display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
-        //display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
+        //display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
+        display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
       }
     }
 
