@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/panel_styles.css';
 import 'vis-network/styles/vis-network.css';
+import 'katex/dist/katex.min.css';
+
+import comp_json from "../../knowledge/comp_classes.json"
 
 
-
-import {build_dict_from_json, build_connectivities, makeTooltip, is_connected} from "../utils"
+import {build_connectivities, makeTooltip, is_connected} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
@@ -34,13 +35,33 @@ const IndexPage = () => {
   const graphRef = React.useRef();
 
   //comp_dict is a dictionary with comp classes and keys and other info as values
-  const comp_dict = build_dict_from_json();
+  //const comp_dict = build_dict_from_json();
+  const comp_dict = comp_json.classes.reduce((dict, cls) => {
+    const {
+      name,
+      shortDescription = null,
+      informalDefinition = null,
+      formalDefinition = null,
+      extraInfos = [],
+      includes = [],
+    } = cls;
+  
+    dict[name] = {
+      shortDescription,
+      informalDefinition,
+      formalDefinition,
+      extraInfos,
+      includes,
+    };
+  
+    return dict;
+  }, {});
 
   // connectivities is a list of outgoing arrows for every class
   const connectivities = build_connectivities();
 
 
-  const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BQP", "PSPACE"]); //these are the default selected nodes for now
+  const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE", "EXP"]); //these are the default selected nodes for now
   const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
   const [openPanel, setOpenPanel] = useState(false);
   const [graph, setGraph] = useState({nodes: [], edges: []});
@@ -81,16 +102,16 @@ const IndexPage = () => {
   const events = {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
-      console.log("selected " + node);
+      //console.log("selected " + node);
 
       const tooltips = document.getElementsByClassName("vis-tooltip");
-      if (tooltips.length == 1){
+      if (tooltips.length === 1){
         const ttip = tooltips.item(0);
-        console.log("hiding" + ttip);
         ttip.style.visibility = 'hidden';
       }
-      else{
+      else if (tooltips.length > 1){
         console.warn("mutliple tooltips found, idk what do");
+        console.log(tooltips);
       }
 
       graphRef.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
@@ -99,8 +120,8 @@ const IndexPage = () => {
       setOpenPanel(true);
     },
     deselectNode: ({previousSelection}) => {
-      const node = previousSelection.nodes[0].id;
-      console.log("unselected " + node);
+      //const node = previousSelection.nodes[0].id;
+      //console.log("unselected " + node);
       setSelectedNode("");
       setOpenPanel(false);
     }

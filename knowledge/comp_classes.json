@@ -1,10 +1,73 @@
 {
     "classes": 
     [
-        {"name": "P", "shortDescription":"Polynomial time"},
-        {"name": "NP", "shortDescription":"Non-deterministic polynomial time"},
-        {"name": "BQP", "shortDescription":"Bounded-error quantum polynomial time"},
-        {"name": "PSPACE", "shortDescription":"Polynomial space"},
+        {
+            "name": "P", "shortDescription":"Polynomial time", 
+            "informalDefinition":"Easy Peasy", 
+            "formalDefinition":"The class of decision problems solved by a polynomial time Turing machine.", 
+            "extraInfos": [
+                "The most fundamental complexity class. The home of tractable algorithms.", 
+                "Considered to capture the notion of efficient deterministic computation.",
+                "Even though a complexity of $$O(n^{1000})$$ appears untractable, once a problem is in P it is often the case that the constant factors can be trimmed down."],
+             "includes":["LP", "SORTED", "PRIME"]
+        },   
+
+        {
+            "name": "NP", "shortDescription":"Non-deterministic polynomial time", 
+            "informalDefinition":"Efficiently verifiable problems", 
+            "formalDefinition":"The class of decision problems solved by a polynomial time non-deterministic Turing machine", 
+            "extraInfos":[
+                "The second most fundamental complexity class.",
+                "Whether $$P=NP$$ is the largest open problem in complexity theory.",
+                "An equivalent definition is the class of languages $$L$$ such that $$x \\in L$$ iff there exists some string y such that M(x, y) accepts in deterministic polynomial time (rewrite)"],
+            "includes":["SAT (complete)", "HAMPATH (complete)"]
+        },
+        {
+            "name":"coNP", "shortDescription":"complement of NP",
+            "informalDefinition":"Efficiently falsifiable problems",
+            "formalDefinition":"The class of languages $$L$$ such that $$x \\notin L$$ iff there exists some string y such that M(x, y) accepts in deterministic polynomial time",
+            "extraInfos":[
+                "Along with NP, forms the foundation of the polynomial hierarchy."
+            ],
+            "includes":["unSAT (complete)"]
+        },
+
+
+        {
+            "name": "PSPACE", "shortDescription":"Polynomial space",
+            "formalDefinition":"The class of decision problems solved by a Turing machine using polynomial space.",
+            "extraInfos":[
+                "Contains the generalisations of many familiar games. Intuitively, this is because one can simulate all possible branches of a game in polynomial space.",
+                "Goes well beyond the reach of efficient computation.",
+                "Clearly $$P \\subseteq PSPACE$$. Intuively, space is more powerful than time because space can be re-used so one expects $$P \\neq PSPACE$$. This remains unproven and is perhaps the most glaring sign of complexity theory's immaturity.",
+                "By an important result called Savitch's theorem, $$PSPACE = NSPACE$$ so non-determinism does not improve the capabilities of space."
+            ],
+            "includes":["QBF (complete)"]
+        },
+
+        {
+            "name": "BPP", "shortDescription":"Bounded-error probabilistic polynomial time",
+            "informalDefinition":"Efficient probabilistically solvable problems",
+            "formalDefinition":"The class of languages $$L$$ such that there exists some probabilistic polynomial-time Turing machine $$M$$ such that:\n1. $$x \\in L \\implies Pr[M(x) = 1] \\geq 2/3$$\n2. $$x \\notin L \\implies Pr[M(x) = 1] \\leq 2/3$$",
+            "extraInfos":[
+                "The choice of $$1/3$$ error probability is completely arbitrary. Smaller error probabilities can be achieved by repeated runs and taking a majority vote.",
+                "It is widely believed that $$P = BPP$$, which is known as the derandomisation conjecture. "
+            ],
+            "includes":["PIT"]
+        },
+
+        {
+            "name": "BQP", "shortDescription":"Bounded-error quantum polynomial time",
+            "informalDefinition":"Efficienty quantumly solvable problems",
+            "formalDefinition":"The class of languages $$L$$ such that there exists a family of quantum circuits $$\\{Q_n\\}$$ on $$n$$ qubits such that for every $$x$$ of size $$n$$:\n1. $$x \\in L \\implies Pr[Q_n(x) = 1] \\geq 2/3$$\n2. $$x \\notin L \\implies Pr[Q_n(x) = 1] \\leq 1/3$$",
+            "extraInfos":[
+                "The quantum generalisation of BPP",
+                "Is contained in PSPACE since every ampltiude of a quantum state can be simulated in polynomial space",
+                "The utility of quantum computers effectively depends on the conjecture $$P \\neq BQP$$. Proving this seems currently intractable, since it would imply $$P \\neq PSPACE$$, a much more fundamental result"
+            ],
+            "includes":["FACTOR"]
+        },
+        
         {"name": "PH", "shortDescription":"Polynomial hierarchy"},
         {"name": "EXP", "shortDescription":"Exponential time"}
     ],
@@ -14,10 +77,14 @@
         "inclusions":
         [
             {"from": "P", "to": "NP", "info": {}},
-            {"from": "P", "to":"BQP", "info":{}},
-            {"from": "BQP", "to": "PSPACE", "info": {}},
+            {"from": "P", "to": "coNP", "info": {}},
+            {"from": "P", "to":"BPP", "info":{}},
+            {"from": "BPP", "to":"BQP", "info":{}},
+            {"from": "BPP", "to":"PH", "info":{"proof":"Sipser-Lautemann"}},
+            {"from": "BQP", "to": "PSPACE", "info": {"proof": "Bernstein-Vazirani"}},
             {"from": "PSPACE", "to": "EXP", "info": {}},
             {"from": "NP", "to": "PH", "info": {}},
+            {"from": "coNP", "to": "PH", "info": {}},
             {"from": "PH", "to": "PSPACE", "info": {}}
         ],
         "exclusions":
@@ -26,7 +93,7 @@
         ],
         "collapses":
         [
-            {"if": ["NP", "P"], "then": ["PH", "P"], "info":{"name": "polynomial hierarchy collapse"}}
+            {"if": ["NP", "P"], "then": ["PH", "P"], "info":{"proof": "polynomial hierarchy collapse"}}
         ]
     }
 }

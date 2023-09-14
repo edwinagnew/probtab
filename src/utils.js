@@ -1,21 +1,6 @@
-import React from "react";
-
-import Tooltip from 'react-bootstrap/Tooltip';
 
 import comp_json from "../knowledge/comp_classes.json"
 
-
-
-export function build_dict_from_json() {
-    var comp_dict = {};
-  
-    for (var i = 0; i < comp_json['classes'].length; i++){
-      var entry = comp_json['classes'][i];
-      comp_dict[entry.name] = {id: entry.id, shortDescription: entry.shortDescription};
-    }
-  
-    return comp_dict;
-  }
   
   export function build_connectivities() {
     const edges = comp_json["relations"]["inclusions"];

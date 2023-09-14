@@ -11,6 +11,7 @@ Currently hosted at: [here](https://elegant-cat-a1a148.netlify.app/)
   3. Better formatted sliding pane
   4. etc.
 2. Write up all classes and more infos
+3. Edge hover: inclusion name if interesting. Clicking gives list of relevant inclusions (where many are probably trivial)
 4. Add search option on class selector
 5. Tooltip text when hovering over class/cursor stuff
 6. Add tutorial page
