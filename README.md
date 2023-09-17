@@ -2,7 +2,7 @@
 
 Visualising the landscape of complexity theory - both current and projected.
 
-Currently hosted at: [here](https://elegant-cat-a1a148.netlify.app/)
+Currently hosted [here](https://elegant-cat-a1a148.netlify.app/)
 
 ### TODO:
 
@@ -16,3 +16,6 @@ Currently hosted at: [here](https://elegant-cat-a1a148.netlify.app/)
 5. Tooltip text when hovering over class/cursor stuff
 6. Add tutorial page
 7. Add subjective mode
+8. Interactive tutorial
+9. settings and wasd to move
+10. Heyting (proof) mode vs freyesotle (bet on belief) mode
