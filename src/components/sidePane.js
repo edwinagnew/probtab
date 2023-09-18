@@ -13,14 +13,14 @@ export class SidePaneComp extends Component {
         const comp_dict = this.props.comp_dict;
 
         if (!comp_dict[selectedNode]){
-            return (<Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} placement='end'>No info</Offcanvas>)
+            return (<Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} placement='end'></Offcanvas>)
         }
         return (
             // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
 
             
-            <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} placement='end'>
-                <Offcanvas.Header>
+            <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} onHide={this.props.closePanel} placement='end'>
+                <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
                 
                 <br></br>

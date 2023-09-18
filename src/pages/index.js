@@ -39,9 +39,9 @@ const IndexPage = () => {
   const comp_dict = comp_json.classes.reduce((dict, cls) => {
     const {
       name,
-      shortDescription = null,
-      informalDefinition = null,
-      formalDefinition = null,
+      shortDescription = "",
+      informalDefinition = "",
+      formalDefinition = "",
       extraInfos = [],
       includes = [],
     } = cls;
@@ -119,11 +119,8 @@ const IndexPage = () => {
       setSelectedNode(node);
       setOpenPanel(true);
     },
-    deselectNode: ({previousSelection}) => {
-      //const node = previousSelection.nodes[0].id;
-      //console.log("unselected " + node);
-      setSelectedNode("");
-      setOpenPanel(false);
+    deselectNode: () => {
+      closePanel();
     }
   };
 
@@ -141,6 +138,11 @@ const IndexPage = () => {
         prevTickedNodes.filter((item) => item !== cls)
       );
     }
+  };
+
+  const closePanel = () => {
+    setSelectedNode("");
+    setOpenPanel(false);
   };
 
 
@@ -162,7 +164,7 @@ const IndexPage = () => {
 
       <GraphComp graphRef={graphRef} graph={graph} events={events}/>
 
-      <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode}/>
+      <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel}/>
       
     </main>
     
