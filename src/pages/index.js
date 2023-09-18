@@ -14,21 +14,7 @@ import {build_connectivities, makeTooltip, is_connected} from "../utils"
 import { CheckFormComp } from "../components/checkForm";
 import { SidePaneComp } from "../components/sidePane";
 import { GraphComp } from "../components/graph";
-
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
-const headingStyles = {
-  marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 500,
-}
-const headingAccentStyles = {
-  color: "#663399",
-  fontSize: "1.5rem",
-}
+import { ControlButtonComp } from "../components/controlPanel";
 
 const IndexPage = () => {
 
@@ -148,23 +134,23 @@ const IndexPage = () => {
 
 
   return (
-    <main style={pageStyles}>
-      <h1 style={headingStyles}>
+    <main>
+      {/* <h1 style={headingStyles}>
         The Problematic Table
         <br />
         <span style={headingAccentStyles}>— Complexity Theory, made simple.</span>
-      </h1>
-      <p>
-        This is the basic map of what's known so far:
-      </p>
+      </h1> */}
 
-     <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
+      <div className="everything-container">
 
-      <br></br>
+        <ControlButtonComp graphRef={graphRef}/>
 
-      <GraphComp graphRef={graphRef} graph={graph} events={events}/>
+        <GraphComp graphRef={graphRef} graph={graph} events={events}/>
 
-      <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel}/>
+        <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
+
+        <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel}/>
+      </div>
       
     </main>
     
