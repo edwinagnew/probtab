@@ -8,7 +8,7 @@ import "../utils"
 export class CheckFormComp extends Component {
     render() {
         return(
-            <div className='checkbox-selector'>
+            <div className='checkbox-container'>
             <Form>
             {Object.keys(this.props.comp_dict).map((cls) => (
               <div className="mb-0" key={`checkbox-${cls}`}>

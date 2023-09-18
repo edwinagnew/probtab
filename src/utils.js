@@ -46,7 +46,7 @@ import comp_json from "../knowledge/comp_classes.json"
   export function getGraphOptions() {
     return {
         width: "100%",
-        height: "650px",
+        height: "100%",
     
         nodes: {
           font: {
@@ -67,6 +67,7 @@ import comp_json from "../knowledge/comp_classes.json"
           navigationButtons: false, // doesn't seem to be working when true, but would be cool
           zoomSpeed: 0.7,
           tooltipDelay: 200,
+          keyboard: true
         },
     
         layout: {
