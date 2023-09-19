@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/panel_styles.css';
 import 'vis-network/styles/vis-network.css';
 import 'katex/dist/katex.min.css';
 
+import '../styles/panel_styles.css';
+
+
 import comp_json from "../../knowledge/comp_classes.json"
-
-
-import {build_connectivities, makeTooltip, is_connected} from "../utils"
+import {build_connectivities, makeTooltip, is_connected, getSidePaneWidth} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
@@ -18,7 +18,8 @@ import { ControlButtonComp } from "../components/controlPanel";
 
 const IndexPage = () => {
 
-  const graphRef = React.useRef();
+  const graphRef = useRef();
+  const sidePaneRef = useRef(null);
 
   //comp_dict is a dictionary with comp classes and keys and other info as values
   //const comp_dict = build_dict_from_json();
@@ -51,6 +52,16 @@ const IndexPage = () => {
   const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
   const [openPanel, setOpenPanel] = useState(false);
   const [graph, setGraph] = useState({nodes: [], edges: []});
+  const [sidePaneWidth, setSidePaneWidth] = useState(0);
+
+  //called when sidePane activated in order to get width of side pane to adjust focusing. Buggy - takes 2/3 selections to kick in. Doesnt need to change after so maybe redo...
+  useEffect(() => {
+    if (sidePaneRef.current) {
+      // Update sidePaneWidth when the ref is available
+      setSidePaneWidth(sidePaneRef.current.offsetWidth);
+      //console.log('updated', sidePaneRef, sidePaneWidth);
+    }
+  }, [sidePaneRef.current]);
 
   
 
@@ -88,8 +99,9 @@ const IndexPage = () => {
   const events = {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
-      //console.log("selected " + node);
-
+      console.log("selected " + node);
+      
+      //hide tooltip (otherwise lingers)
       const tooltips = document.getElementsByClassName("vis-tooltip");
       if (tooltips.length === 1){
         const ttip = tooltips.item(0);
@@ -99,9 +111,16 @@ const IndexPage = () => {
         console.warn("mutliple tooltips found, idk what do");
         console.log(tooltips);
       }
+      
 
-      graphRef.current.focus(node, {animation:{duration:450, easingFunction:"easeInOutQuad"}});
+      
+      //focus onto selected node with offset to account for side pane
+      graphRef.current.focus(node, {
+        animation:{duration:450, easingFunction:"easeInOutQuad"}, 
+        offset: {x:-sidePaneWidth/4, y:0}
+      });
 
+      //sets global stuff
       setSelectedNode(node);
       setOpenPanel(true);
     },
@@ -113,7 +132,6 @@ const IndexPage = () => {
   useEffect(() => {
     updateGraphDisplay(); // Update the graph when tickedNodes changes
   }, [tickedNodes]);
-
 
   //passed with name and checkedness of checkbox. If in tickedNodes remove, if not in tickedNodes appens
   const handleNodeCheckboxChange = (cls, checked) => {
@@ -149,7 +167,7 @@ const IndexPage = () => {
 
         <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
 
-        <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel}/>
+        <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel} sidePaneRef={sidePaneRef}/>
       </div>
       
     </main>

@@ -93,3 +93,9 @@ import comp_json from "../knowledge/comp_classes.json"
     return text;
   }
 
+
+export function getSidePaneWidth(canvComp){
+  //console.log(canvComp);
+  return 0;
+
+}

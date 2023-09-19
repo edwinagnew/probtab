@@ -8,6 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 
 export class SidePaneComp extends Component {
+
     render() {
         const selectedNode = this.props.selectedNode;
         const comp_dict = this.props.comp_dict;
@@ -18,8 +19,8 @@ export class SidePaneComp extends Component {
         return (
             // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
 
-            
-            <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} onHide={this.props.closePanel} placement='end'>
+            <div ref={this.props.sidePaneRef}>
+            <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} onHide={this.props.closePanel} placement='end' id="offCanvasComp">
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
                 
@@ -45,8 +46,8 @@ export class SidePaneComp extends Component {
                     
                     <ul>
                     
-                        {comp_dict[selectedNode].includes.map((inc) => (
-                        <li>{inc}</li>
+                        {comp_dict[selectedNode].includes.map((inc, index) => (
+                        <li key={index}>{inc}</li>
                         ))}
 
                     </ul>
@@ -67,6 +68,7 @@ export class SidePaneComp extends Component {
                 </Offcanvas.Body>
               
             </Offcanvas>
+            </div>
             
         )
     }
