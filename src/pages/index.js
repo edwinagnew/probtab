@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+//import { Router, Route, Switch } from 'react-router-dom';
+//import { Router, Link } from "@reach/router";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vis-network/styles/vis-network.css';
@@ -8,11 +10,11 @@ import '../styles/panel_styles.css';
 
 
 import comp_json from "../../knowledge/comp_classes.json"
-import {build_connectivities, makeTooltip, is_connected, getSidePaneWidth} from "../utils"
+import {build_connectivities, makeTooltip, is_connected} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
-import { SidePaneComp } from "../components/sidePane";
+import  SidePaneComp from "../components/sidePane";
 import { GraphComp } from "../components/graph";
 import { ControlButtonComp } from "../components/controlPanel";
 
@@ -63,6 +65,10 @@ const IndexPage = () => {
     }
   }, [sidePaneRef.current]);
 
+  useEffect(() => {
+    updateGraphDisplay(); // Update the graph when tickedNodes changes
+  }, [tickedNodes]);
+
   
 
   //gets selections from select box and draws the nodes and relevant edges
@@ -99,7 +105,9 @@ const IndexPage = () => {
   const events = {
     selectNode: ({ nodes }) => {
       const node = nodes[0];
-      console.log("selected " + node);
+      //console.log("selected " + node);
+
+      //window.history.pushState({}, '', '/#' + node);
       
       //hide tooltip (otherwise lingers)
       const tooltips = document.getElementsByClassName("vis-tooltip");
@@ -129,9 +137,11 @@ const IndexPage = () => {
     }
   };
 
-  useEffect(() => {
-    updateGraphDisplay(); // Update the graph when tickedNodes changes
-  }, [tickedNodes]);
+  const closePanel = () => {
+    //window.history.back();
+    setSelectedNode("");
+    setOpenPanel(false);
+  };
 
   //passed with name and checkedness of checkbox. If in tickedNodes remove, if not in tickedNodes appens
   const handleNodeCheckboxChange = (cls, checked) => {
@@ -144,34 +154,32 @@ const IndexPage = () => {
     }
   };
 
-  const closePanel = () => {
-    setSelectedNode("");
-    setOpenPanel(false);
-  };
+
 
 
 
   return (
-    <main>
-      {/* <h1 style={headingStyles}>
-        The Problematic Table
-        <br />
-        <span style={headingAccentStyles}>— Complexity Theory, made simple.</span>
-      </h1> */}
+      <main>
 
-      <div className="everything-container">
+        <div className="everything-container">
 
         <ControlButtonComp graphRef={graphRef}/>
 
-        <GraphComp graphRef={graphRef} graph={graph} events={events}/>
+          {/* <Router>
+            <GraphComp path="/" graphRef={graphRef} graph={graph} events={events}/>
+            <SidePaneComp path="/classes/:node" openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel} sidePaneRef={sidePaneRef}/>
+          </Router> */}
 
-        <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
+          <GraphComp graphRef={graphRef} graph={graph} events={events}/>
+          <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel} sidePaneRef={sidePaneRef}/>
+          
 
-        <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel} sidePaneRef={sidePaneRef}/>
-      </div>
-      
-    </main>
-    
+          <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
+
+          
+        </div>
+        
+      </main>
   )
 }
 

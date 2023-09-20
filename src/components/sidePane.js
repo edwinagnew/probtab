@@ -7,20 +7,22 @@ import { InlineTex } from 'react-tex';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
 
-export class SidePaneComp extends Component {
-
-    render() {
-        const selectedNode = this.props.selectedNode;
-        const comp_dict = this.props.comp_dict;
+const SidePaneComp = (props) => {
+    //const { node } = useParams();
+    //const node = props["*"];
+    const { selectedNode, comp_dict, openPanel, closePanel, sidePaneRef } = props;
+  
+    //console.log("node:", node);
+    //console.log("selected node:", selectedNode);
 
         if (!comp_dict[selectedNode]){
-            return (<Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} placement='end'></Offcanvas>)
+            return (<Offcanvas show={openPanel} scroll={true} backdrop={false} placement='end'></Offcanvas>);
         }
         return (
             // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
 
-            <div ref={this.props.sidePaneRef}>
-            <Offcanvas show={this.props.openPanel} scroll={true} backdrop={false} onHide={this.props.closePanel} placement='end' id="offCanvasComp">
+            <div ref={sidePaneRef}>
+            <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasComp">
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
                 
@@ -70,6 +72,7 @@ export class SidePaneComp extends Component {
             </Offcanvas>
             </div>
             
-        )
-    }
-}
+        );
+};
+
+export default SidePaneComp;

@@ -26,6 +26,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-graph-vis": "^1.0.7",
+    "react-router-dom": "^6.16.0",
     "react-tex": "^1.5.0",
     "sass": "^1.66.1"
   }
