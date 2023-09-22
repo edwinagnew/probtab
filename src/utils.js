@@ -19,7 +19,7 @@ import comp_json from "../knowledge/comp_classes.json"
   //checks whether n1 is (recursively) connected to n2. To prevent double arrow, currents is list of nodes that will be drawn
   export function is_connected(cons, currents, n1, n2) {
     //basic falsity check for n1 having no connections
-    if ( !(n1 in cons) || cons[n1] === []){
+    if ( !(n1 in cons) || cons[n1] == []){
       return false;
     }
     //basic truth check that n1 is n2 or n1 is immediately connected to n2
@@ -76,6 +76,13 @@ import comp_json from "../knowledge/comp_classes.json"
             sortMethod: 'directed',  // hubsize, directed
           }
         },
+        physics: {
+          solver: "hierarchicalRepulsion",
+          hierarchicalRepulsion: {
+            
+            springLength: 250
+          }
+        }
       };
   }
 

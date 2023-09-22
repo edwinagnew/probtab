@@ -19,7 +19,8 @@
                 "Contains the generalisations of many familiar games. Intuitively, this is because one can simulate all possible branches of a game in polynomial space.",
                 "Goes well beyond the reach of efficient computation.",
                 "Clearly $$P \\subseteq PSPACE$$. Intuively, space is more powerful than time because space can be re-used so one expects $$P \\neq PSPACE$$. This remains unproven and is perhaps the most glaring sign of complexity theory's immaturity.",
-                "By an important result called Savitch's theorem, $$PSPACE = NSPACE$$ so non-determinism does not improve the capabilities of space."
+                "By an important result called Savitch's theorem, $$PSPACE = NSPACE$$ so non-determinism does not improve the capabilities of space.",
+                "Equals IP - the class of interactive proofs!"
             ],
             "includes":["QBF (complete)"]
         },
@@ -56,6 +57,39 @@
         },
 
         {
+            "name": "RP", "shortDescription":"Randomised polynomial time",  "family":"Random",
+            "informalDefinition":"Probabilistic polynomial time where YES is always right",
+            "formalDefinition":"The class of languages $$L$$ such that there exists some probabilistic polynomial-time Turing machine $$M$$ such that:\n1. $$x \\in L \\implies Pr[M(x) = 1] \\geq 1/2$$\n2. $$x \\notin L \\implies Pr[M(x) = 1] = 0$$",
+            "extraInfos":[
+                "The choice of $$1/2$$ error probability is completely arbitrary. Smaller error probabilities can be achieved by repeated runs and taking a majority vote."
+            ],
+            "includes":[]
+        },
+
+        {
+            "name": "coRP", "shortDescription":"Randomised polynomial time",  "family":"Random",
+            "informalDefinition":"Probabilistic polynomial time where NO is always right",
+            "formalDefinition":"The class of languages $$L$$ such that there exists some probabilistic polynomial-time Turing machine $$M$$ such that:\n1. $$x \\in L \\implies Pr[M(x) = 1] = 1$$\n2. $$x \\notin L \\implies Pr[M(x) = 1] \\leq 1/2$$",
+            "extraInfos":[
+                "As with RP, the choice of $$1/2$$ error probability is completely arbitrary. Smaller error probabilities can be achieved by repeated runs and taking a majority vote."
+            ],
+            "includes":["PIT"]
+        },
+
+        {
+            "name": "PP", "shortDescription":"Probabilistic polynomial time",  "family":"Random",
+            "formalDefinition":"The class of languages $$L$$ such that there exists some probabilistic polynomial-time Turing machine $$M$$ such that:\n1. $$x \\in L \\implies Pr[M(x) = 1] > 1/2$$\n2. $$x \\notin L \\implies Pr[M(x) = 1] < 1/2$$",
+            "extraInfos":[
+                "The choice of $$1/2$$ error probability is completely arbitrary. Other error probabilities can be achieved by repeated runs and taking a majority vote.",
+                "The difference between the YES probability and the NO probability may be arbtirary small. This is what allows the inclusion of NP and what makes this class intractable.",
+                "Equals PostBQP - quantum circuits with post-selection"
+            ],
+            "includes":[]
+        },
+
+        
+
+        {
             "name": "BQP", "shortDescription":"Bounded-error quantum polynomial time",  "family":"Quantum",
             "informalDefinition":"Efficienty quantumly solvable problems",
             "formalDefinition":"The class of languages $$L$$ such that there exists a family of quantum circuits $$\\{Q_n\\}$$ on $$n$$ qubits such that for every $$x$$ of size $$n$$:\n1. $$x \\in L \\implies Pr[Q_n(x) = 1] \\geq 2/3$$\n2. $$x \\notin L \\implies Pr[Q_n(x) = 1] \\leq 1/3$$",
@@ -79,14 +113,24 @@
             {"from": "L", "to": "P", "info": {}},
             {"from": "P", "to": "NP", "info": {}},
             {"from": "P", "to": "coNP", "info": {}},
-            {"from": "P", "to":"BPP", "info":{}},
-            {"from": "BPP", "to":"BQP", "info":{}},
-            {"from": "BPP", "to":"PH", "info":{"proof":"Sipser-Lautemann"}},
-            {"from": "BQP", "to": "PSPACE", "info": {"proof": "Bernstein-Vazirani"}},
-            {"from": "PSPACE", "to": "EXP", "info": {}},
             {"from": "NP", "to": "PH", "info": {}},
             {"from": "coNP", "to": "PH", "info": {}},
-            {"from": "PH", "to": "PSPACE", "info": {}}
+
+            {"from": "P", "to":"RP", "info":{}},
+            {"from": "RP", "to":"NP", "info":{}},
+            {"from": "P", "to":"coRP", "info":{}},
+            {"from": "coRP", "to":"coNP", "info":{}},
+            {"from": "RP", "to":"BPP", "info":{}},
+            {"from": "coRP", "to":"BPP", "info":{}},
+            {"from": "BPP", "to":"BQP", "info":{}},
+            {"from": "BQP", "to":"PP", "info":{}},
+            {"from": "NP", "to":"PP", "info":{}},
+            {"from": "coNP", "to":"PP", "info":{}},
+
+            
+            {"from": "PSPACE", "to": "EXP", "info": {}},
+            {"from": "PH", "to": "PSPACE", "info": {}},
+            {"from": "PP", "to": "PSPACE", "info": {}}
         ],
         "exclusions":
         [
