@@ -31,6 +31,7 @@ const IndexPage = () => {
       shortDescription = "",
       informalDefinition = "",
       formalDefinition = "",
+      family="",
       extraInfos = [],
       includes = [],
     } = cls;
@@ -39,6 +40,7 @@ const IndexPage = () => {
       shortDescription,
       informalDefinition,
       formalDefinition,
+      family,
       extraInfos,
       includes,
     };

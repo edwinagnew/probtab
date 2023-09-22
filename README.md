@@ -12,8 +12,8 @@ Currently hosted [here](https://elegant-cat-a1a148.netlify.app/)
   4. etc.
 2. Write up all classes and more infos
 3. Edge hover: inclusion name if interesting. Clicking gives list of relevant inclusions (where many are probably trivial)
-4. Add search option on class selector
+4. Exlcusion arrows (maybe as red)
 5. cursor stuff
 8. Interactive tutorial
-9. settings and wasd to move
+9. settings
 10. Heyting (proof) mode vs freyesotle (bet on belief) mode
