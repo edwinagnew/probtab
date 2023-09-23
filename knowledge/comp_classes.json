@@ -67,7 +67,7 @@
         },
 
         {
-            "name": "coRP", "shortDescription":"Randomised polynomial time",  "family":"Random",
+            "name": "coRP", "shortDescription":"complement of RP",  "family":"Random",
             "informalDefinition":"Probabilistic polynomial time where NO is always right",
             "formalDefinition":"The class of languages $$L$$ such that there exists some probabilistic polynomial-time Turing machine $$M$$ such that:\n1. $$x \\in L \\implies Pr[M(x) = 1] = 1$$\n2. $$x \\notin L \\implies Pr[M(x) = 1] \\leq 1/2$$",
             "extraInfos":[
@@ -111,8 +111,8 @@
         "inclusions":
         [
             {"from": "L", "to": "P", "info": {}},
-            {"from": "P", "to": "NP", "info": {}},
-            {"from": "P", "to": "coNP", "info": {}},
+            
+            
             {"from": "NP", "to": "PH", "info": {}},
             {"from": "coNP", "to": "PH", "info": {}},
 
