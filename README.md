@@ -13,6 +13,7 @@ Currently hosted [here](https://elegant-cat-a1a148.netlify.app/)
 2. Write up all classes and more infos
 3. Edge hover: inclusion name if interesting. Clicking gives list of relevant inclusions (where many are probably trivial)
   a. data strucutre for tracking where conpisite inclusions from. Display alternaitve routes with drop downs for descriptions of each? pick one arbitrarily? hard code any paths that are particuslry intuitive? eg P to PSPACE has many paths but most obvious is trivial direct simulation...
+  b. include redundant arrows where interesting. give arrows weights for diifficulty eg 1=trivial, 5=100+ page proof and then clicking on arrow minimises sum of difficulties for explanation 
 4. Exlcusion arrows (maybe as red)
 5. cursor stuff
 8. Interactive tutorial
