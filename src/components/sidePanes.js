@@ -6,15 +6,11 @@ import { InlineTex } from 'react-tex';
 
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
+export class NodeSidePaneComp extends Component {
+    render() {
+        const { selectedNode, comp_dict, openPanel, closePanel, sidePaneRef } = this.props;
 
-const SidePaneComp = (props) => {
-    //const { node } = useParams();
-    //const node = props["*"];
-    const { selectedNode, comp_dict, openPanel, closePanel, sidePaneRef } = props;
-  
-    //console.log("node:", node);
-    //console.log("selected node:", selectedNode);
-
+        
         if (!comp_dict[selectedNode]){
             return (<Offcanvas show={openPanel} scroll={true} backdrop={false} placement='end'></Offcanvas>);
         }
@@ -22,7 +18,7 @@ const SidePaneComp = (props) => {
             // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
 
             <div ref={sidePaneRef}>
-            <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasComp">
+            <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasNodeComp">
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
                 
@@ -32,8 +28,6 @@ const SidePaneComp = (props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                 <div className="panel-container">
-
-                    
 
                     <div>Informally: {comp_dict[selectedNode].informalDefinition}</div>
 
@@ -73,6 +67,23 @@ const SidePaneComp = (props) => {
             </div>
             
         );
-};
 
-export default SidePaneComp;
+    }
+}
+
+export class EdgeSidePaneComp extends Component {
+    render(){
+        
+        const {selectedEdge, comp_dict, openPanel, closePanel, sidePaneRef} = this.props;
+        
+        return (
+        <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
+            <Offcanvas.Header closeButton>
+                Header    
+            </Offcanvas.Header>
+            
+            Hi
+            
+        </Offcanvas>);
+    }
+}

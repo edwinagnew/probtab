@@ -14,7 +14,7 @@ import {build_connectivities, makeTooltip, is_connected} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
-import  SidePaneComp from "../components/sidePane";
+import { NodeSidePaneComp, EdgeSidePaneComp } from "../components/sidePanes"
 import { GraphComp } from "../components/graph";
 import { ControlButtonComp } from "../components/controlPanel";
 
@@ -54,7 +54,10 @@ const IndexPage = () => {
 
   const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE", "EXP"]); //these are the default selected nodes for now
   const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
-  const [openPanel, setOpenPanel] = useState(false);
+
+  const [openNodePanel, setOpenNodePanel] = useState(false);
+  const [openEdgePanel, setOpenEdgePanel] = useState(false);
+
   const [graph, setGraph] = useState({nodes: [], edges: []});
   const [sidePaneWidth, setSidePaneWidth] = useState(0);
 
@@ -91,7 +94,8 @@ const IndexPage = () => {
       for (const n2 of display_nodes){
           if(n1 !== n2 && is_connected(connectivities, tickedNodes, n1.id, n2.id)){
             //display_edges.push( {from:comp_dict[n1].id, to:comp_dict[n2].id});
-            display_edges.push( {from:n1.id, to:n2.id});
+            const name = n1.id + "_" + n2.id
+            display_edges.push( {from:n1.id, to:n2.id, id:name});
           }
       }
     }
@@ -132,18 +136,29 @@ const IndexPage = () => {
 
       //sets global stuff
       setSelectedNode(node);
-      setOpenPanel(true);
+      setOpenNodePanel(true);
     },
     deselectNode: () => {
-      closePanel();
+      closeNodePanel();
+    },
+    selectEdge: ({ edges }) => {
+      console.log(connectivities);
+
+      setOpenEdgePanel(true);
+    },
+    deselectEdge: () => {
+      console.log('deselected edge');
+      closeEdgePanel();
     }
   };
 
-  const closePanel = () => {
-    //window.history.back();
+  const closeNodePanel = () => {
     setSelectedNode("");
-    setOpenPanel(false);
+    setOpenNodePanel(false);
   };
+  const closeEdgePanel = () => {
+    setOpenEdgePanel(false);
+  }
 
   //passed with name and checkedness of checkbox. If in tickedNodes remove, if not in tickedNodes appens
   const handleNodeCheckboxChange = (cls, checked) => {
@@ -173,8 +188,9 @@ const IndexPage = () => {
           </Router> */}
 
           <GraphComp graphRef={graphRef} graph={graph} events={events}/>
-          <SidePaneComp openPanel={openPanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closePanel} sidePaneRef={sidePaneRef}/>
-          
+
+          <NodeSidePaneComp openPanel={openNodePanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closeNodePanel} sidePaneRef={sidePaneRef}/>
+          <EdgeSidePaneComp openPanel={openEdgePanel} closePanel={closeEdgePanel}/>
 
           <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
 
