@@ -38,7 +38,7 @@
         {
             "name":"coNP", "shortDescription":"complement of NP",  "family":"Alternation",
             "informalDefinition":"Efficiently falsifiable problems",
-            "formalDefinition":"The class of languages $$L$$ such that $$x \\notin L$$ iff there exists some string y such that M(x, y) accepts in deterministic polynomial time",
+            "formalDefinition":"The class of languages $$L$$ such that $$x \\notin L$$ iff there exists some string y such that M(x, y) rejects in deterministic polynomial time",
             "extraInfos":[
                 "Along with NP, forms the foundation of the polynomial hierarchy."
             ],
@@ -102,14 +102,17 @@
         },
         
         {"name": "PH", "shortDescription":"Polynomial hierarchy",  "family":"Alternation"},
+        {"name": "IP", "shortDescription":"Interactive Proof", "family":"Interaction"},
+        {"name": "P^{#P}", "shortDescription":"Counting P",  "family":"Counting"},
         {"name": "EXP", "shortDescription":"Exponential time", "family":"Time"},
         {"name": "L", "shortDescription":"Log space", "family":"Space"}
+        
     ],
 
     "relations":
     {
-        "inclusions":
-        [
+        "old_inclusions":
+        [   
             {"from": "L", "to": "P", "info": {}},
             
             
@@ -132,9 +135,42 @@
             {"from": "PH", "to": "PSPACE", "info": {}},
             {"from": "PP", "to": "PSPACE", "info": {}}
         ],
-        "exclusions":
+        "_randomcomment": "shouldnt be exhaustive list of all inclusions. Should have some basic ones that can be easily checked",
+        "inclusions":
         [
-            {"from": "P", "to": "EXP", "info": {"proof": "DTime hierarchy"}}
+            {"from":"P", "to":"EXP", "complicatedness":0, "strictness":"Known to be strict due to the deterministic time hierarchy theorem"},
+            {"from":"L", "to":"PSPACE", "complicatedness":0, "strictness":"Known to be strict due to the space hierarchy theorem"},
+            {"from":"P", "to":"PSPACE", "complicatedness":0},
+            {"from":"NP", "to":"PSPACE", "complicatedness":0},
+            {"from":"coNP", "to":"PSPACE", "complicatedness":0},
+            {"from":"BPP", "to":"PSPACE", "complicatedness":0},
+            {"from":"P", "to":"RP", "complicatedness":0},
+            {"from":"P", "to":"coRP", "complicatedness":0},
+            {"from":"P", "to":"NP", "complicatedness":0},
+            {"from":"P", "to":"coNP", "complicatedness":0},
+            {"from":"P", "to":"BPP", "complicatedness":0},
+            {"from":"NP", "to":"PH", "complicatedness":0},
+            {"from":"coNP", "to":"PH", "complicatedness":0},
+            {"from":"RP", "to":"BPP", "complicatedness":0},
+            {"from":"coRP", "to":"BPP", "complicatedness":0},
+            {"from":"BPP", "to":"PP", "complicatedness":0},
+            
+            {"from":"L", "to":"P", "complicatedness":1, "info":"Using only $$O(\\log n)$$ space, a Turing machine can go through only $$2^{O(\\log n)} = poly(n)$$ different configurations before repeating itself"},
+            {"from":"PSPACE", "to":"EXP", "complicatedness":1, "info":"Similar to $$L \\subseteq P$$, a PSPACE machine cannot go through more than $$2^{poly(n)}$$ configurations before repeating itself"},
+            {"from":"RP", "to":"NP", "complicatedness":1, "info":"NP can be thought of as being RP where the acceptance probability is merely non-zero"},
+            {"from":"coRP", "to":"coNP", "complicatedness":1, "info":"coNP can be thought of as being coRP where the rejection probability is merely non-zero"},
+            {"from":"BPP", "to":"BQP", "complicatedness":1, "info":"A quantum computer can easily simulate determinstict computation and use superposition to simulate randomness"},
+            {"from":"P^{#P}", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
+            {"from":"PP", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
+            {"from":"IP", "to":"PSPACE", "complicatedness":1, "info":"Simulating all possible prover messages can be done in polynomial space, since the verifier is polynomially bounded"},
+
+            {"from":"BQP", "to":"P^{#P}", "complicatedness":3, "info":"Proven in [cite BernsteinVazirani]"},
+            {"from":"BQP", "to":"PP", "complicatedness":3, "info":"Proven in [cite Adelman et al]"},
+            {"from":"PH", "to":"P^{#P}", "complicatedness":3, "info":"Toda's Theorem"}
+            
+            
+
+
         ],
         "collapses":
         [

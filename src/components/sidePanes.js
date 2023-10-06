@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { InlineTex } from 'react-tex';
 
-
+import Accordion from 'react-bootstrap/Accordion';
 
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
@@ -74,7 +74,29 @@ export class NodeSidePaneComp extends Component {
 export class EdgeSidePaneComp extends Component {
     render(){
         
-        const {selectedEdge, comp_dict, openPanel, closePanel, sidePaneRef} = this.props;
+        const {selectedEdge, pathDict, openPanel, closePanel, sidePaneRef} = this.props;
+
+        console.log("selected", selectedEdge);
+        
+
+        const path = [];
+        if (selectedEdge in pathDict){
+            const path = pathDict[selectedEdge];
+            console.log("got", path);
+        }
+        else{
+            console.log("shit.", selectedEdge, "didnt have a path");
+        }
+            
+        if (selectedEdge == "" || pathDict == {}){
+            return (
+            <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
+                <Offcanvas.Header closeButton>
+                    Header    
+                </Offcanvas.Header>
+            </Offcanvas>
+            )
+        }
         
         return (
         <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
@@ -82,7 +104,29 @@ export class EdgeSidePaneComp extends Component {
                 Header    
             </Offcanvas.Header>
             
-            Hi
+            
+
+            {/* <Accordion> //not working!
+                {path.map( (step, index) => (
+                    <Accordion.Item eventKey={index.toString()}>
+                        <Accordion.Header>{step.from}, {step.to} ({step.complicatedness})</Accordion.Header>
+                            <Accordion.Body>
+                                Hello 
+                            </Accordion.Body>
+                    </Accordion.Item>
+                ))}
+            </Accordion> */}
+
+            <ul>
+                {pathDict[selectedEdge].map( (step, index) => (
+                    <li key={index}>
+                        {step.from}, {step.to}
+                    </li>
+                    ))}
+            </ul>   
+
+
+            
             
         </Offcanvas>);
     }

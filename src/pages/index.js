@@ -6,11 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vis-network/styles/vis-network.css';
 import 'katex/dist/katex.min.css';
 
+import { InlineTex } from 'react-tex';
+
+
 import '../styles/panel_styles.css';
 
 
 import comp_json from "../../knowledge/comp_classes.json"
-import {build_connectivities, makeTooltip, is_connected} from "../utils"
+import {build_weighted_connectivities, makeTooltip, is_connected, best_connect} from "../utils"
 
 
 import { CheckFormComp } from "../components/checkForm";
@@ -49,11 +52,15 @@ const IndexPage = () => {
   }, {});
 
   // connectivities is a list of outgoing arrows for every class
-  const connectivities = build_connectivities();
+  //const connectivities = build_connectivities();
+  const connectivities = build_weighted_connectivities();
+  console.log("connections:", connectivities);
 
 
   const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE", "EXP"]); //these are the default selected nodes for now
   const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
+  const [selectedEdge, setSelectedEdge] = useState(""); //for keeping track of selection
+  const [pathDict, setPathDict] = useState({});
 
   const [openNodePanel, setOpenNodePanel] = useState(false);
   const [openEdgePanel, setOpenEdgePanel] = useState(false);
@@ -84,7 +91,10 @@ const IndexPage = () => {
     for (const name in comp_dict) {
       if (tickedNodes.includes(name)) {
         display_nodes.push({ id: name, label: '*' + name + '*', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label bold and tooltip shortdescription
-        //display_nodes.push({ id: name, label: '*' + name + '*', title:comp_dict[name].shortDescription }); // makes label bold and tooltip shortdescription
+        //None of these work, but trying playing around with font.multi = html/markdown
+        //display_nodes.push({ id: name, label: <div>d:<InlineTex math={"e$$\\mathbf{" + name + "}$$"}/></div>, title:makeTooltip(comp_dict[name].shortDescription) }); // makes label latex and tooltip shortdescription
+        //display_nodes.push({ id: name, label: '$' + name + '$', title:makeTooltip(comp_dict[name].shortDescription) }); // makes label latex and tooltip shortdescription
+        //display_nodes.push({ id: name, label: <div>d {name} </div>, title:makeTooltip(comp_dict[name].shortDescription) }); // makes label latex and tooltip shortdescription
       }
     }
 
@@ -92,10 +102,18 @@ const IndexPage = () => {
     const display_edges = [];
     for (const n1 of display_nodes){
       for (const n2 of display_nodes){
-          if(n1 !== n2 && is_connected(connectivities, tickedNodes, n1.id, n2.id)){
-            //display_edges.push( {from:comp_dict[n1].id, to:comp_dict[n2].id});
-            const name = n1.id + "_" + n2.id
-            display_edges.push( {from:n1.id, to:n2.id, id:name});
+          
+          //if(n1 !== n2 && is_connected_old(connectivities, tickedNodes, n1.id, n2.id)){
+          if(n1 !== n2 && is_connected(connectivities, n1.id, n2.id)){
+            //console.log("\nlooking for best path for ", n1.id, n2.id);
+            const [best_path, best_cost] = best_connect(connectivities, tickedNodes, n1.id, n2.id);
+            //console.log("got ", best_path, "\n");
+            if (best_cost >= 0){ //otherwise intentionally avoided
+              const name = n1.id + "_" + n2.id;
+              pathDict[name] = best_path;
+              setPathDict(pathDict);
+              display_edges.push( {from:n1.id, to:n2.id, id:name, path:best_path});
+            }
           }
       }
     }
@@ -142,12 +160,17 @@ const IndexPage = () => {
       closeNodePanel();
     },
     selectEdge: ({ edges }) => {
-      console.log(connectivities);
+      console.log(edges);
+      const edge = edges[0];
 
+      console.log(pathDict);
+
+      setSelectedEdge(edge);
       setOpenEdgePanel(true);
     },
     deselectEdge: () => {
       console.log('deselected edge');
+      //setSelectedEdge("");
       closeEdgePanel();
     }
   };
@@ -157,6 +180,7 @@ const IndexPage = () => {
     setOpenNodePanel(false);
   };
   const closeEdgePanel = () => {
+    setSelectedEdge("");
     setOpenEdgePanel(false);
   }
 
@@ -190,7 +214,7 @@ const IndexPage = () => {
           <GraphComp graphRef={graphRef} graph={graph} events={events}/>
 
           <NodeSidePaneComp openPanel={openNodePanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closeNodePanel} sidePaneRef={sidePaneRef}/>
-          <EdgeSidePaneComp openPanel={openEdgePanel} closePanel={closeEdgePanel}/>
+          <EdgeSidePaneComp openPanel={openEdgePanel} pathDict={pathDict} selectedEdge={selectedEdge} closePanel={closeEdgePanel} sidePaneRef={sidePaneRef}/>
 
           <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
 
