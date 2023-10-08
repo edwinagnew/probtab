@@ -76,7 +76,12 @@ export class EdgeSidePaneComp extends Component {
         
         const {selectedEdge, pathDict, openPanel, closePanel, sidePaneRef} = this.props;
 
-        console.log("selected", selectedEdge);
+        const complicatedness_dict = {
+            0: "Trivial",
+            1: "Easy",
+            2: "Medium",
+            3: "Hard"
+        }
         
             
         if (selectedEdge == "" || pathDict == {}){
@@ -100,10 +105,14 @@ export class EdgeSidePaneComp extends Component {
             <Accordion> 
                 {pathDict[selectedEdge].map( (step, index) => (
                     <Accordion.Item eventKey={index.toString()}>
-                        <Accordion.Header>{step.from}, {step.to} ({step.complicatedness})</Accordion.Header>
-                            <Accordion.Body>
-                                {step.info} 
-                            </Accordion.Body>
+                        <Accordion.Header>
+                            <InlineTex texContent={"$$\\mathsf{" + step.from + "} \\subseteq \\mathsf{" + step.to + "}$$"} /> 
+                            <br></br>
+                            <div>({complicatedness_dict[step.complicatedness]})</div>
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            {step.info} 
+                        </Accordion.Body>
                     </Accordion.Item>
                 ))}
             </Accordion>
