@@ -160,16 +160,31 @@ const IndexPage = () => {
       closeNodePanel();
     },
     selectEdge: ({ edges }) => {
-      console.log(edges);
+      
       const edge = edges[0];
 
-      console.log(pathDict);
+      const [nodeA, nodeB] = edge.split("_");
+      console.log(nodeA, nodeB);
+      const aPos = graphRef.current.getPosition(nodeA);
+      const bPos = graphRef.current.getPosition(nodeB);
+      console.log(aPos, bPos);
+
+
+      graphRef.current.moveTo({ //zooms to halfway between two nodes
+        position: {x:(aPos.x + bPos.x)/2, y:(aPos.y + bPos.y)/2},
+        
+        offset: {x:-sidePaneWidth/4, y:0}, //same as for nodes so still buggy
+        animation: { 
+          duration: 450,
+          easingFunction: "easeInOutQuad"
+        }
+      })
 
       setSelectedEdge(edge);
       setOpenEdgePanel(true);
     },
     deselectEdge: () => {
-      console.log('deselected edge');
+      //console.log('deselected edge');
       //setSelectedEdge("");
       closeEdgePanel();
     }
