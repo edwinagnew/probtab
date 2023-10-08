@@ -78,15 +78,6 @@ export class EdgeSidePaneComp extends Component {
 
         console.log("selected", selectedEdge);
         
-
-        const path = [];
-        if (selectedEdge in pathDict){
-            const path = pathDict[selectedEdge];
-            console.log("got", path);
-        }
-        else{
-            console.log("shit.", selectedEdge, "didnt have a path");
-        }
             
         if (selectedEdge == "" || pathDict == {}){
             return (
@@ -101,29 +92,21 @@ export class EdgeSidePaneComp extends Component {
         return (
         <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
             <Offcanvas.Header closeButton>
-                Header    
+                <InlineTex texContent={"$$\\mathsf{" + selectedEdge.split("_")[0] + "} \\subseteq \\mathsf{" + selectedEdge.split("_")[1] + "}$$"} />        
             </Offcanvas.Header>
             
-            
+            Follows from:
 
-            {/* <Accordion> //not working!
-                {path.map( (step, index) => (
+            <Accordion> 
+                {pathDict[selectedEdge].map( (step, index) => (
                     <Accordion.Item eventKey={index.toString()}>
                         <Accordion.Header>{step.from}, {step.to} ({step.complicatedness})</Accordion.Header>
                             <Accordion.Body>
-                                Hello 
+                                {step.info} 
                             </Accordion.Body>
                     </Accordion.Item>
                 ))}
-            </Accordion> */}
-
-            <ul>
-                {pathDict[selectedEdge].map( (step, index) => (
-                    <li key={index}>
-                        {step.from}, {step.to}
-                    </li>
-                    ))}
-            </ul>   
+            </Accordion>
 
 
             
