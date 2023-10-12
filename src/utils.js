@@ -1,4 +1,5 @@
 
+import { InlineTex } from "react-tex";
 import comp_json from "../knowledge/comp_classes.json"
 
 const FAKE_INFINITY = 100000;
@@ -176,9 +177,6 @@ const complicatedness_dict = {
     return text;
   }
 
-
-export function getSidePaneWidth(canvComp){
-  //console.log(canvComp);
-  return 0;
-
-}
+  export function makeTexSafe(text){
+    return text.replace('#', '\\#') // backslashs cause issues but need for P^{#P} -> P^{\\#P}. might need to add more stuff later
+  }

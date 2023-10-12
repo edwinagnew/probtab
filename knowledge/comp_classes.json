@@ -160,7 +160,7 @@
             {"from":"PSPACE", "to":"EXP", "complicatedness":1, "info":"Similar to $$L \\subseteq P$$, a PSPACE machine cannot go through more than $$2^{poly(n)}$$ configurations before repeating itself"},
             {"from":"RP", "to":"NP", "complicatedness":1, "info":"NP can be thought of as being RP where the acceptance probability is merely non-zero"},
             {"from":"coRP", "to":"coNP", "complicatedness":1, "info":"coNP can be thought of as being coRP where the rejection probability is merely non-zero"},
-            {"from":"BPP", "to":"BQP", "complicatedness":1, "info":"A quantum computer can easily simulate determinstict computation and use superposition to simulate randomness"},
+            {"from":"BPP", "to":"BQP", "complicatedness":1, "info":"A quantum computer can easily simulate deterministic computation and use superposition to simulate randomness"},
             {"from":"BQP", "to":"PSPACE", "complicatedness":1, "info":"Every amplitude of the quantum state can be simulated in polynomial space"},
             {"from":"P^{#P}", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
             {"from":"PP", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
