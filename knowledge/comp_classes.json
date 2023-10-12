@@ -102,7 +102,7 @@
         
         {"name": "PH", "shortDescription":"Polynomial hierarchy",  "family":"Alternation"},
         {"name": "IP", "shortDescription":"Interactive Proof", "family":"Interaction"},
-        {"name": "P^{\\#P}", "shortDescription":"Counting P",  "family":"Counting"},
+        {"name": "P^{#P}", "shortDescription":"Counting P",  "family":"Counting"},
         {"name": "EXP", "shortDescription":"Exponential time", "family":"Time"},
         {"name": "L", "shortDescription":"Log space", "family":"Space"}
         
@@ -162,13 +162,13 @@
             {"from":"coRP", "to":"coNP", "complicatedness":1, "info":"coNP can be thought of as being coRP where the rejection probability is merely non-zero"},
             {"from":"BPP", "to":"BQP", "complicatedness":1, "info":"A quantum computer can easily simulate determinstict computation and use superposition to simulate randomness"},
             {"from":"BQP", "to":"PSPACE", "complicatedness":1, "info":"Every amplitude of the quantum state can be simulated in polynomial space"},
-            {"from":"P^{\\#P}", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
+            {"from":"P^{#P}", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
             {"from":"PP", "to":"PSPACE", "complicatedness":1, "info":"Trying all possible inputs, keeping track of the number of accepting solutions can be done in PSPACE"},
             {"from":"IP", "to":"PSPACE", "complicatedness":1, "info":"Simulating all possible prover messages can be done in polynomial space, since the verifier is polynomially bounded"},
 
-            {"from":"BQP", "to":"P^{\\#P}", "complicatedness":3, "info":"Proven in [cite BernsteinVazirani]"},
+            {"from":"BQP", "to":"P^{#P}", "complicatedness":3, "info":"Proven in [cite BernsteinVazirani]"},
             {"from":"BQP", "to":"PP", "complicatedness":3, "info":"Proven in [cite Adelman et al]"},
-            {"from":"PH", "to":"P^{\\#P}", "complicatedness":3, "info":"Toda's Theorem"}
+            {"from":"PH", "to":"P^{#P}", "complicatedness":3, "info":"Toda's Theorem"}
             
             
 

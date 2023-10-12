@@ -54,7 +54,7 @@ const IndexPage = () => {
   // connectivities is a list of outgoing arrows for every class
   //const connectivities = build_connectivities();
   const connectivities = build_weighted_connectivities();
-  console.log("connections:", connectivities);
+  //console.log("connections:", connectivities);
 
 
   const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE", "EXP"]); //these are the default selected nodes for now
@@ -164,10 +164,9 @@ const IndexPage = () => {
       const edge = edges[0];
 
       const [nodeA, nodeB] = edge.split("_");
-      console.log(nodeA, nodeB);
+      //console.log(nodeA, nodeB);
       const aPos = graphRef.current.getPosition(nodeA);
       const bPos = graphRef.current.getPosition(nodeB);
-      console.log(aPos, bPos);
 
 
       graphRef.current.moveTo({ //zooms to halfway between two nodes

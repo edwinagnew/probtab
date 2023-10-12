@@ -104,7 +104,7 @@ export class EdgeSidePaneComp extends Component {
 
             <Accordion> 
                 {pathDict[selectedEdge].map( (step, index) => (
-                    <Accordion.Item eventKey={index.toString()}>
+                    <Accordion.Item eventKey={index.toString()} key={index}>
                         <Accordion.Header>
                             <InlineTex texContent={"$$\\mathsf{" + step.from + "} \\subseteq \\mathsf{" + step.to + "}$$"} /> 
                             <br></br>
