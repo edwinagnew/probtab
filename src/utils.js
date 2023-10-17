@@ -128,8 +128,20 @@ const complicatedness_dict = {
         nodes: {
           font: {
             face: 'courier new',
-            size: 16,
+            size: 22,
             multi: 'markdown',
+          },
+          color: { //todo: make nicer colours!
+            border: '#2B7CE9',
+            background: '#97C2FC',
+            highlight: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            },
+            hover: {
+              border: '#2B7CE9',
+              background: '#D2E5FF'
+            }
           },
         },
     
@@ -156,8 +168,10 @@ const complicatedness_dict = {
         physics: {
           solver: "hierarchicalRepulsion",
           hierarchicalRepulsion: {
-            
-            springLength: 250
+            springLength: 250,
+            damping:0.04,
+            nodeDistance: 60
+            //springConstant:0.015
           }
         }
       };
