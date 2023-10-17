@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-//import { Router, Route, Switch } from 'react-router-dom';
-//import { Router, Link } from "@reach/router";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vis-network/styles/vis-network.css';

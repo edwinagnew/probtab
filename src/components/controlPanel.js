@@ -4,6 +4,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
+import { Link } from 'gatsby';
+
 
 import { recentreGraph } from '../utils';
 
@@ -24,7 +26,7 @@ export class ControlButtonComp extends Component {
              <ButtonGroup aria-label="Basic example">
                 <Button onClick={() => recentreGraph(this.props.graphRef.current)}>Recentre</Button>
                 <Button>Settings</Button>
-                <Button>?</Button>
+                
                 
                 <OverlayTrigger
                     placement="bottom"
@@ -33,6 +35,10 @@ export class ControlButtonComp extends Component {
                 >
                     <Button>Keyboard</Button>
                 </OverlayTrigger>
+
+                <Link to="/tutorial">
+                  <Button>?</Button>
+                </Link>
                 
             </ButtonGroup>
           </div> 
