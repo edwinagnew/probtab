@@ -88,7 +88,7 @@ export class NodeSidePaneComp extends Component {
   
                           <div style={{ marginLeft: 'auto', marginRight: 0, fontSize: 'small' }}>{complicatedness_dict[step.complicatedness]}</div>
                         </Accordion.Header>
-                        <Accordion.Body>{step.info ? step.info : "Follows from definitions. Why not read them?"}</Accordion.Body>
+                        <Accordion.Body>{step.info ? <InlineTex texContent={step.info} /> : "Follows from definitions. Why not read them?"}</Accordion.Body>
                       </Accordion.Item>
                     ))}
                   </Accordion>
