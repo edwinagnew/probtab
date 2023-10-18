@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'vis-network/styles/vis-network.css';
 import 'katex/dist/katex.min.css';
 
-import { InlineTex } from 'react-tex';
+
 
 
 import '../styles/panel_styles.css';
@@ -18,6 +18,7 @@ import { CheckFormComp } from "../components/checkForm";
 import { NodeSidePaneComp, EdgeSidePaneComp } from "../components/sidePanes"
 import { GraphComp } from "../components/graph";
 import { ControlButtonComp } from "../components/controlPanel";
+import { NavComp } from "../components/mainNav";
 
 const IndexPage = () => {
 
@@ -213,10 +214,11 @@ const IndexPage = () => {
 
   return (
       <main>
-
+        
         <div className="everything-container">
+          <NavComp/>
 
-        <ControlButtonComp graphRef={graphRef}/>
+          <ControlButtonComp graphRef={graphRef}/>
 
           {/* <Router>
             <GraphComp path="/" graphRef={graphRef} graph={graph} events={events}/>

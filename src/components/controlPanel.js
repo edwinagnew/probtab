@@ -35,10 +35,6 @@ export class ControlButtonComp extends Component {
                 >
                     <Button>Keyboard</Button>
                 </OverlayTrigger>
-
-                <Link to="/tutorial">
-                  <Button>?</Button>
-                </Link>
                 
             </ButtonGroup>
           </div> 

@@ -19,7 +19,8 @@ export class NodeSidePaneComp extends Component {
         return (
             // for styling see https://react-bootstrap.netlify.app/docs/components/offcanvas#offcanvasheader 
 
-            <div ref={sidePaneRef}>
+            // <div ref={sidePaneRef}>
+            <div>
             <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasNodeComp">
                 <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{selectedNode}</Offcanvas.Title>
@@ -97,44 +98,31 @@ export class EdgeSidePaneComp extends Component {
         }
         
         return (
-        <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
-            <Offcanvas.Header closeButton className="text-center">
-                <InlineTex texContent={"$$\\mathsf{" + makeTexSafe(selectedEdge.split("_")[0]) + "} \\subseteq \\mathsf{" + makeTexSafe(selectedEdge.split("_")[1]) + "}$$"} />        
-            </Offcanvas.Header>
+                <Offcanvas show={openPanel} scroll={true} backdrop={false} onHide={closePanel} placement='end' id="offCanvasEdgeComp">
+                    
+                    <Offcanvas.Header closeButton className="text-center">
+                        <InlineTex texContent={"$$\\mathsf{" + makeTexSafe(selectedEdge.split("_")[0]) + "} \\subseteq \\mathsf{" + makeTexSafe(selectedEdge.split("_")[1]) + "}$$"} />        
+                    </Offcanvas.Header>
 
-            <Offcanvas.Body>
-                <div className="panel-container">
-
-                
-                
-                <div style={{ margin:"10px"}}>Follows from:
-
-                
-                <Accordion alwaysOpen={true}> 
-                    {pathDict[selectedEdge].map( (step, index) => (
-                        <Accordion.Item eventKey={index.toString()} key={index}>
-                            <Accordion.Header>
-                                <div><InlineTex texContent={"$$\\mathsf{" + makeTexSafe(step.from) + "} \\subseteq \\mathsf{" + makeTexSafe(step.to) + "}$$"} /> </div>
-                                
-                                <div style={{marginLeft:'auto', marginRight:0, fontSize:'small'}}>({complicatedness_dict[step.complicatedness]})</div>
-                            </Accordion.Header>
-                            <Accordion.Body>
-                                {step.info ? step.info : "Follows from definitions. Why not read them?"} 
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    ))}
-                </Accordion>
-
-                </div>
-
-            </div>
-
-            </Offcanvas.Body>
-            
-
-
-            
-            
-        </Offcanvas>);
+                    <Offcanvas.Body>
+                        <div className="panel-container" style={{ margin:"10px"}}>
+                            Follows from:
+                            <Accordion alwaysOpen={true}> 
+                                {pathDict[selectedEdge].map( (step, index) => (
+                                    <Accordion.Item eventKey={index.toString()} key={index}>
+                                        <Accordion.Header>
+                                            <div><InlineTex texContent={"$$\\mathsf{" + makeTexSafe(step.from) + "} \\subseteq \\mathsf{" + makeTexSafe(step.to) + "}$$"} /> </div>
+                                            
+                                            <div style={{marginLeft:'auto', marginRight:0, fontSize:'small'}}>({complicatedness_dict[step.complicatedness]})</div>
+                                        </Accordion.Header>
+                                        <Accordion.Body>
+                                            {step.info ? step.info : "Follows from definitions. Why not read them?"} 
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                ))}
+                            </Accordion>
+                        </div>
+                    </Offcanvas.Body>
+                </Offcanvas>);
     }
 }

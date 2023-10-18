@@ -2,17 +2,22 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-const TutorialPage = () => {
+import { NavComp } from '../../components/mainNav';
+
+
+const MainTutorialPage = () => {
   return (
     <div>
+        <NavComp/>
+
         <h1>Help</h1>
         <ul>
         This website is an interactive Hasse diagram of complexity theory. What's the problem?
         <li>
-            <Link to="/tutorials/comp_tutorial">I dont know what complexity theory is</Link>
+            <Link to="/tutorials/complexity">I dont know what complexity theory is</Link>
         </li>
         <li>
-            <Link to="/tutorials/poset_tutorial">I dont know what a Hasse diagram is</Link>
+            <Link to="/tutorials/poset">I dont know what a Hasse diagram is</Link>
         </li>
         <li>
             <Link to="/tutorial3">I dont know how to interact</Link>
@@ -22,4 +27,4 @@ const TutorialPage = () => {
   );
 };
 
-export default TutorialPage;
+export default MainTutorialPage;
