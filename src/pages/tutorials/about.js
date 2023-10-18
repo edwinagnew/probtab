@@ -10,7 +10,7 @@ const MainTutorialPage = () => {
     <div>
         <NavComp/>
 
-        <h1>Help</h1>
+        <h1>About</h1>
         <ul>
         This website is an interactive Hasse diagram of complexity theory. What's the problem?
         <li>

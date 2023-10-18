@@ -18,5 +18,13 @@ module.exports = {
       "path": "./src/pages/"
     },
     __key: "pages"
-  }]
+  },
+  {
+    resolve: `gatsby-source-filesystem`,
+    options: {
+      name: `md_tutorials`,
+      path: `./src/md_tutorials/`,
+    },
+  },
+  `gatsby-transformer-remark`,]
 };
