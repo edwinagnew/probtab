@@ -189,8 +189,11 @@ const IndexPage = () => {
   };
 
   const closeNodePanel = () => {
+    
+    console.log("closing");
     setSelectedNode("");
     setOpenNodePanel(false);
+    
   };
   const closeEdgePanel = () => {
     setSelectedEdge("");
