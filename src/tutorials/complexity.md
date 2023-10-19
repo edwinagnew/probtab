@@ -1,6 +1,6 @@
 ---
 title: "Complexity Theory"
-slug: "/md_tutorials/complexity"
+slug: "/tutorials/complexity"
 ---
 ## Complexity Theory
 

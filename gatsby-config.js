@@ -22,8 +22,8 @@ module.exports = {
   {
     resolve: `gatsby-source-filesystem`,
     options: {
-      name: `md_tutorials`,
-      path: `./src/md_tutorials/`,
+      name: `tutorials`,
+      path: `./src/tutorials/`,
     },
   },
   `gatsby-transformer-remark`,]
