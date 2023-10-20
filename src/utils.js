@@ -1,20 +1,15 @@
 
-import { InlineTex } from "react-tex";
+
 import comp_json from "../knowledge/comp_classes.json"
 
 const FAKE_INFINITY = 100000;
 const json_edges = comp_json["relations"]["inclusions"];
 
-const complicatedness_dict = {
-  0: "Trivial",
-  1: "Easy",
-  2: "Medium",
-  3: "Hard"
-}
+
   
   export function build_connectivities() {
     //const edges = comp_json["relations"]["old_inclusions"];
-    const edges = comp_json["relations"]["inclusions"];
+    //const edges = comp_json["relations"]["inclusions"];
   
     const cons = {};
     for (const e of json_edges){
