@@ -26,8 +26,10 @@
 
 .button-panel {
   padding: 5px;
-  position: absolute;
   z-index: 2;
+  position: absolute;
+  bottom: 250px;
+  margin: 10px;
 }
 
 div.vis-tooltip {

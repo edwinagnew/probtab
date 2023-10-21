@@ -51,28 +51,26 @@ export class CheckFormComp extends Component {
               onChange={this.handleSearchChange}
               className="mb-0"
             />
-
-            
-          <Form>
-            {Object.keys(groupedCheckboxes).map((family) => (
-              <div key={`checkbox-group-${family}`}>
-                <Form.Label className="mb-0">
-                  {family} {/* Display the family name as a label */}
-                </Form.Label>
-                {groupedCheckboxes[family].map((cls) => (
-                  <div key={`checkbox-${cls}`}>
-                    <Form.Check
-                      label={cls}
-                      id={cls}
-                      defaultChecked={ticked.includes(cls)}
-                      onChange={(e) => changeFunc(cls, e.target.checked)}
-                      
-                    />
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Form>
+            <Form>
+              {Object.keys(groupedCheckboxes).map((family) => (
+                <div key={`checkbox-group-${family}`}>
+                  <Form.Label className="mb-0">
+                    {family} {/* Display the family name as a label */}
+                  </Form.Label>
+                  {groupedCheckboxes[family].map((cls) => (
+                    <div key={`checkbox-${cls}`}>
+                      <Form.Check
+                        label={cls}
+                        id={cls}
+                        defaultChecked={ticked.includes(cls)}
+                        onChange={(e) => changeFunc(cls, e.target.checked)}
+                        
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Form>
         </div> 
       )
     }

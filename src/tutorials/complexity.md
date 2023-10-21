@@ -2,7 +2,7 @@
 title: "Complexity Theory"
 slug: "/tutorials/complexity"
 ---
-## What is Complexity Theory?
+# What is Complexity Theory?
 
 ## Contents
 
@@ -10,11 +10,6 @@ slug: "/tutorials/complexity"
 - [Medium](#medium)
 - [Hard](#hard)
 
-<!-- ```toc
-exclude: Contents
-from-heading: 3
-to-heading: 6
-``` -->
 
 ### Easy
 
@@ -50,7 +45,7 @@ A few years later, in 1935/36 mathematicians Alonzo Church and Alan Turing indep
 
 #### Turing and the Machines
 
- It was soon noticed that Church and Turing's seemingly distinct definitions were actually just different ways of talking about the same thing. What was that thing? Nowadays, we call them "computers". You may have heard of them - they literally run the world.
+ So Hilbert's program was thwarted by Church and Turing's  It was soon noticed that Church and Turing's seemingly distinct definitions were actually just different ways of talking about the same thing. What was that thing? Nowadays, we call them "computers". You may have heard of them - they literally run the world.
 
  Turing's definition of a computer is called a [Turing Machine](https://www.youtube.com/watch?v=dNRDvLACg5Q) and is still in popular use today in theoretical computer science. Though I'll leave the fully precise definition for another time, the basic idea of a Turing Machine is something consisting of:
  1. An *infinitely* long tape filled with various symbols

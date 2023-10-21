@@ -23,7 +23,7 @@ export class ControlButtonComp extends Component {
 
         return(
             <div className='button-panel'>
-             <ButtonGroup aria-label="Basic example">
+             <ButtonGroup vertical>
                 <Button onClick={() => recentreGraph(this.props.graphRef.current)}>Recentre</Button>
                 <Button>Settings</Button>
                 

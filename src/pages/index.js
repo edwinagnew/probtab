@@ -221,7 +221,7 @@ const IndexPage = () => {
         <div className="everything-container">
           <NavComp/>
 
-          <ControlButtonComp graphRef={graphRef}/>
+          
 
           {/* <Router>
             <GraphComp path="/" graphRef={graphRef} graph={graph} events={events}/>
@@ -232,8 +232,10 @@ const IndexPage = () => {
 
           <NodeSidePaneComp openPanel={openNodePanel} comp_dict={comp_dict} selectedNode={selectedNode} closePanel={closeNodePanel} sidePaneRef={sidePaneRef}/>
           <EdgeSidePaneComp openPanel={openEdgePanel} pathDict={pathDict} selectedEdge={selectedEdge} closePanel={closeEdgePanel} sidePaneRef={sidePaneRef}/>
-
+          
+          
           <CheckFormComp comp_dict={comp_dict} ticked={tickedNodes} changeFunc={handleNodeCheckboxChange}/>
+          <ControlButtonComp graphRef={graphRef}/>
 
           
         </div>

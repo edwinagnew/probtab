@@ -1,10 +1,11 @@
 import { graphql } from "gatsby";
-import * as React from "react";
+import React from 'react';
+
 import { NavComp } from "../components/mainNav";
-//import Layout from "../components/layout";
 
 export default function BlogPostTemplate({ data: { markdownRemark } }) {
   const { frontmatter, html } = markdownRemark;
+
   return (
     <div>
         <NavComp/>
