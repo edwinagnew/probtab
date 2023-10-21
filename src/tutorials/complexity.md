@@ -6,12 +6,15 @@ slug: "/tutorials/complexity"
 
 ## Contents
 
+- [Easy](#easy)
+- [Medium](#medium)
+- [Hard](#hard)
+
 <!-- ```toc
 exclude: Contents
 from-heading: 3
 to-heading: 6
 ``` -->
-
 
 ### Easy
 
@@ -32,9 +35,9 @@ To understand, the philosophy and motivation behind this field, let's start with
 
 #### Hilbert's Hubris
 
-It's the roaring 20s. While most of Europe is busy celebrating the end of WW1 and rapidly modernising, its mathematicians - who were mostly oblivious to whole war ordeal - are in the midst of a very different cultural transformation. The philosophy of [Formalism](https://en.wikipedia.org/wiki/Formalism_(philosophy_of_mathematics)) - the idea that maths is essentially just meaningless symbol shunting - has swept blackboards across the continent. The main leader of the Formalists was a German mathematician called David Hilbert (it was customary at this time for villains to be from Germany). Hilbert had a grand plan of reducing all of mathematics to a small number of special rules called axioms. At which point, he believed it would be possible to know all mathematical truths. His grand plan was known as "Hilbert's Program" and its slogan was "we *must* know, we *will* know". So he was a pretty modest guy. In 1928, Hilbert posed the following challenge:
+It's the roaring 20s. While most of Europe is busy celebrating the end of WW1 and rapidly modernising, its mathematicians - who were mostly oblivious to whole war ordeal - are in the midst of a very different cultural transformation. The philosophy of [Formalism](https://en.wikipedia.org/wiki/Formalism_(philosophy_of_mathematics)) - the idea that maths is essentially just meaningless symbol shunting - has swept blackboards across the continent. More. The main leader of the Formalists was a German mathematician called David Hilbert (it was customary at this time for villains to be from Germany). Hilbert had a grand plan of reducing all of mathematics to a small number of special rules called *axioms*. At which point, he believed it would be possible to know all mathematical truths. His grand plan was known as "Hilbert's Program" and its slogan was "we *must* know, we *will* know". So he was a pretty modest guy. In 1928, Hilbert posed the following challenge:
 
-> Find me procedure to decide every mathematical statement!
+>Find me a procedure to decide every mathematical statement!
 
 In other words, Hilbert sought a mechanical process that takes in statements and outputs either "true" or "false" correctly, for all possible mathematic statements. You might be wondering what exactly is meant by "mechanical process" and in fact the first step to resolving Hilbert's challenge is to clarify exactly what counts as such a procedure. This is actually why I'm telling this story because it just so happened that a rigorous definition of "mechanical process" accidentally gave birth to the entire field of computer science!
 

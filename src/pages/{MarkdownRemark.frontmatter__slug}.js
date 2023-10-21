@@ -9,7 +9,7 @@ export default function BlogPostTemplate({ data: { markdownRemark } }) {
     <div>
         <NavComp/>
         <h1>{frontmatter.title}</h1>
-        <div className="post-body" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="post-body" dangerouslySetInnerHTML={{ __html: html }} style={{ margin: "10px" }}/>
     </div>
   );
 }
