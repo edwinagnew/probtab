@@ -168,7 +168,8 @@
 
             {"from":"BQP", "to":"P^{#P}", "complicatedness":3, "info":"Proven in [cite BernsteinVazirani]"},
             {"from":"BQP", "to":"PP", "complicatedness":3, "info":"Proven in [cite Adelman et al]"},
-            {"from":"PH", "to":"P^{#P}", "complicatedness":3, "info":"Toda's Theorem"}
+            {"from":"PH", "to":"P^{#P}", "complicatedness":3, "info":"Toda's Theorem"},
+            {"from":"BPP", "to":"PH", "complicatedness":3, "info":"$$\\mathsf{BPP} \\subseteq \\mathsf{\\Sigma_2} \\cap \\mathsf{\\Pi_2}$$ [Sipser-Lautemann]"}
             
             
 

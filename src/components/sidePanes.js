@@ -65,7 +65,8 @@ export class NodeSidePaneComp extends Component {
         0: "Trivial",
         1: "Easy",
         2: "Medium",
-        3: "Hard"
+        3: "Hard",
+        4: "Very Hard"
       };
   
       return (
