@@ -23,6 +23,7 @@ The details of complexity theory get quite hairy and can be quite intimidating. 
 
 (Some historical details have been embellished for your entertainment - if you want to know the real story, go read a book or something)
 
+Alt: You know how chemistry is basically just taking a bunch of random materials that they call elements/molecules and smash them together and see whether any kind of cool explosion happens? Havent you always wished you could do that but with with imaginary computers with cool superpowers? Well guess what? Youre about to because you're here to learn **theoretical computer science**!!
 
 #### Hilbert's Hubris
 
