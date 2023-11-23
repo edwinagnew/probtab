@@ -2,7 +2,7 @@
 
 Visualising the landscape of complexity theory - both current and projected.
 
-Currently hosted [here](https://elegant-cat-a1a148.netlify.app/)
+Currently hosted [here](https://theproblematictable.netlify.app/)
 
 ### TODO:
 
