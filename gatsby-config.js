@@ -1,4 +1,4 @@
-	/**
+/**
  * @type {import('gatsby').GatsbyConfig}
  */
 module.exports = {
@@ -6,61 +6,50 @@ module.exports = {
     title: `probtab`,
     siteUrl: `https://www.yourdomain.tld`
   },
-  plugins: ["gatsby-plugin-sitemap", {
-    resolve: 'gatsby-plugin-manifest',
-    options: {
-      "icon": "src/images/icon.png"
-    }
-  }, 
-  "gatsby-plugin-sharp",
-  "gatsby-transformer-sharp",
-  "gatsby-plugin-image",
-  {
-    resolve: "gatsby-plugin-mdx",
-    options: {
-      gatsbyRemarkPlugins: [
-        {
-          resolve: "gatsby-remark-images",
-          options: {
-            maxWidth: 400,
+  plugins: [
+    "gatsby-plugin-sitemap",
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        icon: "src/images/icon.png"
+      }
+    },
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-image",
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: "gatsby-remark-images",
+            options: {
+              maxWidth: 400,
+            },
           },
-        },
-      ],
-    },
-  }, {
-    resolve: "gatsby-source-filesystem",
-    options: {
-      "name": "pages",
-      "path": "./src/pages/"
-    },
-    __key: "pages"
-  },
-  {
-    resolve: "gatsby-source-filesystem",
-    options: {
-      name: "tutorials",
-      path: "./src/tutorials/",
-    },
-  },
-  {
-    resolve: "gatsby-transformer-remark",
-    options: {
-      gfm: true,
-      plugins: [
-        {
-          resolve: "gatsby-remark-images",
-          options: {
-            maxWidth: 400,
-          },
-        },
-        {
-          resolve: "gatsby-remark-katex",
-          options: {
-            // Add any KaTeX options from https://github.com/KaTeX/KaTeX/blob/master/docs/options.md here
-            strict: "ignore",
+          {
+            resolve: "gatsby-remark-katex",
+            options: {
+              strict: "ignore",
+            }
           }
-        }
-      ],
+        ],
+      },
     },
-  },]
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/pages/`
+      },
+      __key: "pages"
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `tutorials`,
+        path: `${__dirname}/src/tutorials`,
+      },
+    },
+  ],
 };
