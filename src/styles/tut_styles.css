@@ -17,3 +17,10 @@ blockquote {
   blockquote p {
     display: inline;
   }
+
+  .tut-selector {
+    margin-top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    padding: 25px;
+  }

@@ -1,15 +1,7 @@
 
-
-# What is Complexity Theory?
-
-## Contents
-
-- [Easy](#easy)
-- [Medium](#medium)
-- [Hard](#hard)
+## What is Complexity Theory?
 
 
-### Easy
 
 Pre-reqs: 
 Audience: 
@@ -38,8 +30,15 @@ Anyways, back to the story. It's briefly worth considering what the implications
 
 Fortunately, only one year later, Hilbert's program suffered a tremendous blow from a 23 year-old student named Kurt Gödel. In his PhD thesis, Gödel used some mind-bending [paradoxical wizardy](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems#First_incompleteness_theorem) to show that whatever set of rules you tried to come up with, as long as they were able to talk about numbers, there would be a true statement that could be neither proven nor disproven. Gödel seemed to have found a way of producing facts that could not be known. To give you an idea, Gödel's trick was basically to find a way of translating the sentence "this sentence is unprovable" into a statement about numbers!
 
-A few years later, mathematicians Alonzo Church and Alan Turing independelty built on Gödel's result to finish off Hilbert's program. In both cases, this involved proposing a definition of mechanical procedure and then demonstrating certain fundamental limitations to such procedures. In both cases, such limitations implied that Hilbert's challenge was impossible. This was absolutely devastating for Hilbert's program and the philosophy of Formalism more generally. While some much milder forms continue to exist, this was a real point in favour of the ineffability of mathematical truth. 
+A few years later, mathematicians Alonzo Church and Alan Turing independently built on Gödel's result to finish off Hilbert's program. In both cases, this involved proposing a definition of mechanical procedure and then demonstrating certain fundamental limitations to such procedures. In both cases, such limitations implied that Hilbert's challenge was impossible. This was absolutely devastating for Hilbert's program and the philosophy of Formalism more generally. While some much milder forms continue to exist, this was a real point in favour of the ineffability of mathematical truth. 
 
+import { QuizBox } from '../components/quizBox';
+
+<QuizBox
+  question="What was the goal of Hilbert's Program?"
+  options={["To conquer Europe", "To invent a sophisticated programming language", "To automate mathematical proof", "To make maths pretty again"]}
+  answer="To automate mathematical proof"
+/>
 
 #### Alan and the Machines
 
@@ -101,8 +100,3 @@ This problem of the efficiency of guessing and checking is usually called the $\
 
 Hopefully this introduction has piqued your interest about the weird world of complexity theory. If you'd like to learn more and are curious to see some slightly more formal details, please continue to the next tutorial. I promise the upcoming details do not make things boring - in fact they give us the tools to talk about some even weirder things from magical wizards to quantum computers to time travel. Read on to find out how!
 
-
-### Medium
-
-
-### Hard
