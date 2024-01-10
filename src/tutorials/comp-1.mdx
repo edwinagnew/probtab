@@ -26,18 +26,25 @@ It's the roaring 20s. While most of Europe is busy celebrating the end of WW1 an
 
 In other words, Hilbert sought a mechanical process that takes in statements and outputs either "true" or "false" correctly, for all possible mathematic statements. You might be wondering what exactly is meant by "mechanical process" and in fact the first step to resolving Hilbert's challenge is to clarify exactly what counts as such a procedure. This is actually why I'm telling this story because it just so happened that a rigorous definition of "mechanical process" accidentally gave birth to the entire field of computer science!
 
-Anyways, back to the story. It's briefly worth considering what the implications would be if Hilbert's challenge were succesful. Firstly, it would indeed mean that all mathematical knowledge was possible. Secondly, it would seem to put all mathematicians out of a job since all symbol shunting could now be outsourced to mechanical robots. While alluring for academic funding bodies, this would be a nail in the coffin for those who (like me) believe in the inherent creativity necessary for maths. If proving stuff were too easy, there'd be no point!
-
-Fortunately, only one year later, Hilbert's program suffered a tremendous blow from a 23 year-old student named Kurt Gödel. In his PhD thesis, Gödel used some mind-bending [paradoxical wizardy](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems#First_incompleteness_theorem) to show that whatever set of rules you tried to come up with, as long as they were able to talk about numbers, there would be a true statement that could be neither proven nor disproven. Gödel seemed to have found a way of producing facts that could not be known. To give you an idea, Gödel's trick was basically to find a way of translating the sentence "this sentence is unprovable" into a statement about numbers!
-
-A few years later, mathematicians Alonzo Church and Alan Turing independently built on Gödel's result to finish off Hilbert's program. In both cases, this involved proposing a definition of mechanical procedure and then demonstrating certain fundamental limitations to such procedures. In both cases, such limitations implied that Hilbert's challenge was impossible. This was absolutely devastating for Hilbert's program and the philosophy of Formalism more generally. While some much milder forms continue to exist, this was a real point in favour of the ineffability of mathematical truth. 
-
 import { QuizBox } from '../components/quizBox';
 
 <QuizBox
   question="What was the goal of Hilbert's Program?"
   options={["To conquer Europe", "To invent a sophisticated programming language", "To automate mathematical proof", "To make maths pretty again"]}
   answer="To automate mathematical proof"
+/>
+
+
+Anyways, back to the story. It's briefly worth considering what the implications would be if Hilbert's challenge were succesful. Firstly, it would indeed mean that all mathematical knowledge was possible. Secondly, it would seem to put all mathematicians out of a job since all symbol shunting could now be outsourced to mechanical robots. While alluring for academic funding bodies, this would be a nail in the coffin for those who (like me) believe in the inherent creativity necessary for maths. If proving stuff were too easy, there'd be no point!
+
+Fortunately, only one year later, Hilbert's program suffered a tremendous blow from a 23 year-old student named Kurt Gödel. In his PhD thesis, Gödel used some mind-bending [paradoxical wizardy](https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems#First_incompleteness_theorem) to show that whatever set of rules you tried to come up with, as long as they were able to talk about numbers, there would be a true statement that could be neither proven nor disproven. Gödel seemed to have found a way of producing facts that could not be known. To give you an idea, Gödel's trick was basically to find a way of translating the sentence "this sentence is unprovable" into a statement about numbers!
+
+A few years later, mathematicians Alonzo Church and Alan Turing independently built on Gödel's result to finish off Hilbert's program. In both cases, this involved proposing a definition of mechanical procedure and then demonstrating certain fundamental limitations to such procedures. In both cases, such limitations implied that Hilbert's challenge was impossible. This was absolutely devastating for Hilbert's program and the philosophy of Formalism more generally. While some much milder forms continue to exist, this was a real point in favour of the ineffability of mathematical truth. 
+
+<QuizBox
+  question="Why did Hilbert's Program Fail?"
+  options={["The gods struck Hilbert by lightning as punishment for his hubris", "Godel proved some statements cannot be proven", "Godel proved that we cannot build computers", "Mechanical processes weren't properly defined"]}
+  answer="Godel proved some statements cannot be proven"
 />
 
 #### Alan and the Machines
@@ -67,6 +74,12 @@ The other main difference is that this definition seems extremely primitive comp
 2. It makes it **more general**. Turing's definition was not intended to explore the limits of the available computers at the time (because in 1930, there weren't any!) Since then, the way we have built computers has changed an enourmous amount - from being the size of a room to fitting onto one's wrist - and so too have their capabilities. There's no point assuming a computer has to be built in a certain way since it will probably become redundant in about 10 years anyway.
 
 Hopefully I've convinced you that a Turing machine is a fairly simple and general model of a computer. In fact, there's a good chance you're worried that the definition is *too* simple. What's the point of studying such a primitive contraption? How could this ever match up to the supercomputers of today? Answer: very tediously! At the end of the day, everything a modern computer does is based off some software written in some programming language. Though programming languages differ a lot in appearance, they all boil down to performing the same basic operations: reading/writing data, branching ("if this, then do that, otherwise do something else") and looping ("do this, now do it again, and again ..."). It's not difficult to see that a Turing machine is capable of these basic tasks. So if you handed me a complicated computer program, then with enough time and spare paper I could translate each instruction line by line and eventually produce a program for a Turing machine that does *exactly the same thing*. When this happens, we say the Turing machine *simulates* your program. The Turing machine might take a lot longer than your supercomputer, but (at least initially) we are not interested in efficiency (how well something is done), merely *computability* (whether something can be done). 
+
+<QuizBox
+  question="What is a Turing Machine?"
+  options={["A little box with 'Turing' written on it", "A physical device", "A fancy toaster", "An abstract, mathematical definition of a computer"]}
+  answer="An abstract, mathematical definition of a computer"
+/>
 
 Recall that Church's independent definition of a computer turned out to be equivalent (Turing's computers can simulate Church's and vice versa). We have since found many more examples of [equivalent definitions](https://en.wikipedia.org/wiki/Turing_completeness#Examples) that are all capable of exactly the same things. But no one has ever been able to come up with a single definition that can do *more* than a Turing machine. So computer scientists have collectively decided that a Turing machine basically nails it in terms of what it means to be computable. They even give this idea a fancy name: the [Church-Turing Thesis](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis). Despite the name, this is basically just a shared assumption. If you're unhappy with this, I strongly encourage you to try and come up with your own stronger definition - you'd probably kick off a new digital revolution!
 

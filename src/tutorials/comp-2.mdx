@@ -1,13 +1,36 @@
 
-In Level 1, we saw how computer science was born out of trying to understand the limits of what can be answered by these funny little machines called computers. In this level, 
+In Level 1, we saw how computer science was born out of trying to understand the limits of what can be answered by these funny little machines called computers. In this level, we're going to examine the details of these computers a little more closely. The goal is the work up towards the formal definition of the $\mathsf{P}$ vs $\mathsf{NP}$ problem mentioned at the end of Level 1. To do so, you'll need to be comfortable with some basic notation from set theory. You should be able to understand what a statement like $a \in A \subseteq B \cap C$ means. If you can't, check out the little refresher below.
 
 import { Accordion } from "react-bootstrap"
 
-<Accordion defaultActiveKey="0">
+<Accordion >
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Accordion Item #1</Accordion.Header>
+        <Accordion.Header>Baby Set Theory</Accordion.Header>
         <Accordion.Body>
-          Accordion body this is some latex $ 2 + 2 = 4 $
+          A *set* is just a well-defined way of talking about a collection of things. If I give you a set, the only questions worth asking are about what it contains. Because a set is a mathematical concept, there can be no ambiguity about whether or not a set contains something. 
+          
+          Sets are usually written in capital letters like $A, B, C$ and the things inside them are usually written in lowercase letters like $a, b, c$. If a thing $a$ is in a set $A$, it is called an *element* of that set and we write $a \in A$. A set can be defined by writing a list of its elements, e.g. $A = \{a, b, c\}$. Because we only care about what a set contains, the order and frequency of elements is irrelevant and so $\{a, b, c\} = \{c, b, a\} = \{a, a, a, b, b, c\}$. On the other hand $\{a, b, c\} \neq \{a, b\}$ because the latter does not contain $c$.
+
+          Writing a set as a list of elements is only convenient when there are a small number of elements. However, because its a mathematical concept, sets very often contain *infinitely* many elements. This isn't as scary as it sounds: the set of natural numbers $\{0, 1, 2, ...\}$ is presumably already very familiar to you. It is so important that it is given a fancy symbol: $\mathbb{N}$. We can use this set to define another infinite set: the even numbers can be written as $\{2 \times n : n \in \mathbb{N}\}$. The colon 
         </Accordion.Body>
       </Accordion.Item>
 </Accordion>
+
+Simplifcations:
+- decision (yes/no) rather than answers
+- single tape TM
+- binary alphabet
+
+### Turing Machines
+
+Actual formal definition
+
+
+### Algorithms
+
+Computer programs are all about doing things. But what does it mean to do things? This seems like a silly question but consider the following program which "solves" Fermat's Last Theorem by outputting "TRUE". Even though that is the correct answer, it is extremely unsatisfying because it relied on the solution being already written into the program before we ran it. Rather than working out the answer, it was hard-coded in. If that's a bit too abstract, check out the following [clip from Modern Family](https://www.youtube.com/shorts/MHzvbvgqHO4). Once again, the point is that memorising the answer to a question is not the same as solving it. To ensure that computers are not allowed to cheat in this way, computer scientists came up with a clever trick. To make sure that computer genuinely solves a specific problem, it is required to be able to solve **all** problems of a certain type. So rather than asking a computer for the square root of $84$, you should imagine asking a computer for the square root of $x$, where $x$ could be any number whatsoever. A program that is able to handle all inputs (of a certain type) is called an *algorithm*. There is an excellent quote by a computer scientist called Kleene: "an algorithm is a finite answer to an infinte quetsion". I love this quote because it sounds impossible - how could anything finite ever deal with infinite questions? The answer: computers!
+
+The technical term for a collection of questions of a similar type is called a *language*. The name is a bit confusing, coming from some fascinating (but irrelevant for us) historical overlaps with linguistics. In any case, the main take-away is that algorithms do not resolve questions but languages. 
+
+
+### Regular Languages
