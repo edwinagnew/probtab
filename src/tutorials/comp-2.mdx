@@ -1,4 +1,6 @@
 
+## What is Complexity Theory really?
+
 In Level 1, we saw how computer science was born out of trying to understand the limits of what can be answered by these funny little machines called computers. In this level, we're going to examine the details of these computers a little more closely. The goal is the work up towards the formal definition of the $\mathsf{P}$ vs $\mathsf{NP}$ problem mentioned at the end of Level 1. To do so, you'll need to be comfortable with some basic notation from set theory. You should be able to understand what a statement like $a \in A \subseteq B \cap C$ means. If you can't, check out the little refresher below.
 
 import { Accordion } from "react-bootstrap"
@@ -11,7 +13,7 @@ import { Accordion } from "react-bootstrap"
           
           Sets are usually written in capital letters like $A, B, C$ and the things inside them are usually written in lowercase letters like $a, b, c$. If a thing $a$ is in a set $A$, it is called an *element* of that set and we write $a \in A$. A set can be defined by writing a list of its elements, e.g. $A = \{a, b, c\}$. Because we only care about what a set contains, the order and frequency of elements is irrelevant and so $\{a, b, c\} = \{c, b, a\} = \{a, a, a, b, b, c\}$. On the other hand $\{a, b, c\} \neq \{a, b\}$ because the latter does not contain $c$.
 
-          Writing a set as a list of elements is only convenient when there are a small number of elements. However, because its a mathematical concept, sets very often contain *infinitely* many elements. This isn't as scary as it sounds: the set of natural numbers $\{0, 1, 2, ...\}$ is presumably already very familiar to you. It is so important that it is given a fancy symbol: $\mathbb{N}$. We can use this set to define another infinite set: the even numbers can be written as $\{2 \times n : n \in \mathbb{N}\}$. The colon 
+          Writing a set as a list of elements is only convenient when there are a small number of elements. However, because its a mathematical concept, sets very often contain *infinitely* many elements. This isn't as scary as it sounds: the set of natural numbers $\{0, 1, 2, ...\}$ is presumably already very familiar to you. It is so important that it is given a fancy symbol: $\mathbb{N}$. We can use sets to define others sets by giving a rule for picking out the elements. For example, $\{n \in \mathbb{N}: 0 < n \leq 10\}$ is the same of numbers between 1 and 10. The colon 
         </Accordion.Body>
       </Accordion.Item>
 </Accordion>
@@ -23,14 +25,57 @@ Simplifcations:
 
 ### Turing Machines
 
-Actual formal definition
+Recall that the theoretical computer science is mostly based around playing with the capabilities of this funny imaginary contraption called a *Turing Machine* (TM). In level 1, we worked with an informal definition that basically treated a TM as a little cart whizzing up and down an infinitely long tape according to some pre-defined rules. The TM is given a particular question by writing some input on its tape and then after whizzing around for a while, spits out YES or NO. In order to probe further, we're going to need a slightly more precise definition. So let's just go for it. The technical definition of a Turing Machine is simply a tuple $(Q, \Sigma, I, q_0, F, \delta)$ where $I \subseteq Q, q_0 \in Q, \delta: Q \backslash F \times \Sigma \to Q \Sigma \times \{L, S, R\}$. Happy? No? Let's dive a little deeper:
+
+
+* $Q$ - set of states. This is the basis of a Turing Machine's programming language and will become clearer with an example.
+* $\Sigma$ - alphabet. This is the (finite) set of symbols that may be written on the tape at any point. It must always contain a blank symbol $\square$. Very often, it is assumed for simplicity that $\Sigma = \{0, 1\}$ - called the *binary alphabet*. This makes no difference to a TM's abilities because if you're given a TM with a larger alphabet, you can always imagine subsituting a symbol with its binary encoding and producing a TM with a binary alphabet that does exactly the same as the original one. Don't worry about the details of this. Just know you're safe to assume the simplest possibility.
+* $I$ - input alphabet. This is the (finite) set of symbols that which the *input* may be written in. Clearly, $I \subseteq \Sigma$ but they may differ because $\Sigma$ contains extra symbols that are useful for intermediate working out. By similar reasoning to above, you can safely assume that $I = \{0, 1\}$.
+* $q_0$ - initial state. This is the where the TM begins. Will make more sense with an example.
+* $F$ - final states. This the set of states (i.e. $F \subseteq Q$) corresponding to a completed calculation. Once a final state has been reached, whatever is on the tape is considered the output.
+* $\delta$ - transition function. This is by far the most important part of a TM's definition. Given a current state it reads the current tape symbol, writes a new symbol, moves into a new state and moves one position left or right along the tape (or stays in place). Thus it can be described as a function $\delta: Q\backslash F \times \Sigma \to Q \times \Sigma \times \{L, S, R\}$. In fact, it is often simpler to assume $\delta$ is a *partial* function which means it doesn't have to be defined on all pairs of states and symbols. $\delta$ can get very complicated but I will give a simple example below.
+
+And that's it! There's quite a lot of book-keeping about what symbols and letters are allowed, but the interesting part of a TM is all contained in $\delta$. To help see how all these parts fit together, I will explicitly construct a TM that solves the following problem: replace all the 0's on the tape with 1's. This is not a particularly useful or impressive problem but who cares?
+
+For simplicity, let's assume $\Sigma = I = \{0, 1\}$. Now let's construct $\delta$. Intuively, what it will do is write a 1 regardless of the current symbol and then move right one position. So let's write that out:
+- $\delta(q_0, 0) = q_0, 1, R$ - if we're in the starting state $q_0$ and read a 0, then stay in $q_0$, write a 1 and move right. 
+- $\delta(q_0, 1) = q_0, 1, R$ - same but for reading a 1
+
+Is that it? Let's work through an example to find out. Imagine the tape begins with $1010$. By definition, the TM begins in $q_0$. Here's a (very bad) drawing of the starting situation:
+![Turing machine diagram](./imgs/tm-basic-1.jpg)
+
+As described, there's a tape containing $1010$ (and then infinitely many blanks) and the head of a TM in state $q_0$ looking at the first tape position. So by definition of $\delta$, the first step should be to rewrite the 1, then move right and remain in state $q_0$. This gives:
+![Turing machine diagram 2](./imgs/tm-basic-2.jpg)
+
+Next we'll do the same, replacing the 0:
+![Turing machine diagram 3](./imgs/tm-basic-3.jpg)
+
+This will continue until arriving at the end of the tape:
+![Turing machine diagram 5](./imgs/tm-basic-5.jpg)
+
+What happens when reading a blank? We are yet to define $\delta(q_0, \square)$ and so the machine would crash. Instead, since we have succesfully arrived at the end of the input, the ideal behaviour would be to simply stop. Thus we define $\delta(q_0, \square) = q_f, \square, S$. Since $q_f$ is intended to be a final state, we must remeber to include $q_f \in F$. Having done so, we get:
+![Turing machine diagram 6](./imgs/tm-basic-6.jpg)
+
+Great success! A compact way of representing the behaviour of this TM is the following "state machine diagram" which I drew using [this website](https://turingmachine.io/):
+![Turing state machine diagram](./imgs/tm-sm.png)
+
 
 
 ### Algorithms
+
+What does it mean to have a good program? Getting the right answer? NO!
+
 
 Computer programs are all about doing things. But what does it mean to do things? This seems like a silly question but consider the following program which "solves" Fermat's Last Theorem by outputting "TRUE". Even though that is the correct answer, it is extremely unsatisfying because it relied on the solution being already written into the program before we ran it. Rather than working out the answer, it was hard-coded in. If that's a bit too abstract, check out the following [clip from Modern Family](https://www.youtube.com/shorts/MHzvbvgqHO4). Once again, the point is that memorising the answer to a question is not the same as solving it. To ensure that computers are not allowed to cheat in this way, computer scientists came up with a clever trick. To make sure that computer genuinely solves a specific problem, it is required to be able to solve **all** problems of a certain type. So rather than asking a computer for the square root of $84$, you should imagine asking a computer for the square root of $x$, where $x$ could be any number whatsoever. A program that is able to handle all inputs (of a certain type) is called an *algorithm*. There is an excellent quote by a computer scientist called Kleene: "an algorithm is a finite answer to an infinte quetsion". I love this quote because it sounds impossible - how could anything finite ever deal with infinite questions? The answer: computers!
 
 The technical term for a collection of questions of a similar type is called a *language*. The name is a bit confusing, coming from some fascinating (but irrelevant for us) historical overlaps with linguistics. In any case, the main take-away is that algorithms do not resolve questions but languages. 
 
+Layers of understanding:
+- right answer
+- correct program
+- proof of correctness of program
+- proof of optimality of program
+- smallest proof of optimality of program
+- ...
 
 ### Regular Languages
