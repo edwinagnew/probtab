@@ -1,7 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import React from "react";
 
 import '../styles/panel_styles.css';
 
