@@ -9,7 +9,7 @@ export class NavComp extends Component {
     render() {
         
         return (
-            <div style={{position:"fixed", width:"100%", zIndex:2}}>
+            <div style={{position:"fixed", width:"100%", zIndex:2, marginBottom:10}}>
                 <Navbar bg="primary" data-bs-theme="dark">
                     <Container>
                     <Navbar.Brand href="/">The Problematic Table</Navbar.Brand>

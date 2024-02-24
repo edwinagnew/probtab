@@ -56,7 +56,7 @@ const IndexPage = () => {
   //console.log("connections:", connectivities);
 
 
-  const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE", "EXP"]); //these are the default selected nodes for now
+  const [tickedNodes, setTickedNodes] = useState(["P", "NP", "BPP", "PSPACE"]); //these are the default selected nodes for now
   const [selectedNode, setSelectedNode] = useState(""); //for keeping track of selection
   const [selectedEdge, setSelectedEdge] = useState(""); //for keeping track of selection
   const [pathDict, setPathDict] = useState({});
