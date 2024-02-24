@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const PBarComp = () => {
-  return (
-    <div>
+export class PBarComp extends Component {
+
+  render() {
+    return (
+      <div>
         HI
-    </div>
-  );
-};
-
-export default PBarComp;
+      </div>
+    );
+  }
+}

@@ -19,7 +19,7 @@ import { NodeSidePaneComp, EdgeSidePaneComp } from "../components/sidePanes"
 import { GraphComp } from "../components/graph";
 import { ControlButtonComp } from "../components/controlPanel";
 import { NavComp } from "../components/mainNav";
-import {PBarComp} from "../components/specComps"
+import { PBarComp } from "../components/specComps"
 
 const SpecPage = () => {
 
